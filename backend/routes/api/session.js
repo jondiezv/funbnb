@@ -8,6 +8,7 @@ const { User } = require("../../db/models");
 const router = express.Router();
 
 router.post("/", async (req, res, next) => {
+  //route to login and validate user
   const { credential, password } = req.body;
 
   const user = await User.unscoped().findOne({
@@ -38,6 +39,12 @@ router.post("/", async (req, res, next) => {
   return res.json({
     user: safeUser,
   });
+});
+
+router.delete("/", (_req, res) => {
+  //route to log out user
+  res.clearCookie("token");
+  return res.json({ message: "success" });
 });
 
 module.exports = router;
