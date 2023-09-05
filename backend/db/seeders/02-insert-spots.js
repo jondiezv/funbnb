@@ -13,7 +13,7 @@ module.exports = {
       [
         {
           //Remember to check database for current Id's bc autoincrement
-          ownerId: 4,
+          ownerId: 1,
           address: "123 Main St",
           city: "Orlando",
           state: "Florida",
@@ -25,7 +25,7 @@ module.exports = {
           price: 20.5,
         },
         {
-          ownerId: 5,
+          ownerId: 2,
           address: "456 Another St",
           city: "Another City",
           state: "Another State",

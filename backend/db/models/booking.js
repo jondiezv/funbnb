@@ -17,6 +17,12 @@ module.exports = (sequelize, DataTypes) => {
 
   Booking.init(
     {
+      id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+      },
       spotId: {
         type: DataTypes.INTEGER,
         references: {
