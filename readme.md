@@ -4,6 +4,6 @@
 
 ![db-schema]
 
-[db-schema]: ./images/airbnb_dbdiagram.png
+[db-schema]: ./images/funbnb_dbdiagram.png
 
 ## API Documentation
