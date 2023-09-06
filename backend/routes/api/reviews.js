@@ -1,5 +1,11 @@
 const express = require("express");
-const { Spot, Review, SpotImage, User } = require("../../db/models"); //Always remember to import the models you are going to need in your endpoints!
+const {
+  Spot,
+  Review,
+  SpotImage,
+  User,
+  ReviewImage,
+} = require("../../db/models"); //Always remember to import the models you are going to need in your endpoints!
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 const {
