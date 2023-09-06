@@ -45,9 +45,7 @@ router.get("/", async (req, res) => {
 
     res.status(200).json({ Spots: formattedSpots });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "An error occurred while retrieving spots" });
+    res.status(500).json({ message: "Could not retrieve spots" });
   }
 });
 
@@ -97,9 +95,7 @@ router.get("/current", requireAuth, async (req, res) => {
 
     res.status(200).json({ Spots: formattedSpots });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "An error occurred while retrieving spots" });
+    res.status(500).json({ message: "Could not retrieve spots" });
   }
 });
 
