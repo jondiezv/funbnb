@@ -1,5 +1,11 @@
 const express = require("express");
-const { Spot, Review, SpotImage, User } = require("../../db/models"); //Always remember to import the models you are going to need in your endpoints!
+const {
+  Spot,
+  Review,
+  SpotImage,
+  User,
+  ReviewImage,
+} = require("../../db/models"); //Always remember to import the models you are going to need in your endpoints!
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 const {
@@ -370,6 +376,40 @@ router.delete("/:spotId", requireAuth, async (req, res, next) => {
     });
   } catch (err) {
     next(err);
+  }
+});
+
+router.get("/:spotId/reviews", async (req, res) => {
+  try {
+    const { spotId } = req.params;
+
+    // Validate that the spot exists
+    const spot = await Spot.findByPk(spotId);
+    if (!spot) {
+      return res.status(404).json({ message: "Spot couldn't be found" });
+    }
+
+    // Fetch all reviews for this spot, including associated User and ReviewImages data
+    const reviews = await Review.findAll({
+      where: { spotId },
+      include: [
+        {
+          model: User,
+          attributes: ["id", "firstName", "lastName"],
+        },
+        {
+          model: ReviewImage,
+          attributes: ["id", "url"],
+        },
+      ],
+    });
+
+    res.status(200).json({ Reviews: reviews });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ message: "An error occurred while fetching reviews" });
   }
 });
 
