@@ -105,7 +105,7 @@ router.get("/current", requireAuth, async (req, res) => {
   }
 });
 
-//Find a spot by its ID
+//Get details of a Spot from an id
 router.get("/:spotId", async (req, res) => {
   try {
     const { spotId } = req.params;
@@ -217,6 +217,41 @@ router.post("/", requireAuth, validateCreateSpot, async (req, res, next) => {
     });
 
     return res.status(201).json(spot);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//Add an Image to a Spot based on the Spot's id
+router.post("/:spotId/images", requireAuth, async (req, res, next) => {
+  try {
+    const spotId = parseInt(req.params.spotId, 10);
+    const userId = req.user.id;
+    const { url, preview } = req.body;
+
+    const spot = await Spot.findByPk(spotId);
+
+    if (!spot) {
+      return res.status(404).json({ message: "Spot couldn't be found" });
+    }
+
+    if (spot.ownerId !== userId) {
+      const err = new Error("Unauthorized");
+      err.status = 401;
+      return next(err);
+    }
+
+    const spotImage = await SpotImage.create({
+      spotId,
+      url,
+      preview,
+    });
+
+    return res.status(200).json({
+      id: spotImage.id,
+      url: spotImage.url,
+      preview: spotImage.preview,
+    });
   } catch (err) {
     next(err);
   }
