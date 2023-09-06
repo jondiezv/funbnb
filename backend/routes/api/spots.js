@@ -11,27 +11,30 @@ router.get("/", async (req, res) => {
       include: [
         {
           model: Review,
-          attributes: ["stars"], //Include the stars from each spot review so we can calculate avg later
+          attributes: ["stars"],
         },
         {
           model: SpotImage,
-          where: { preview: true }, //Only get SpotImages that have 'preview' set to true
-          required: false, //Still get the Spot even if it doesn't have a preview image, we'll just get null :)
+          where: { preview: true },
+          required: false,
         },
       ],
     });
 
-    //Map the spots to include calculated average ratings and previewImage
     const formattedSpots = spots.map((spot) => {
-      const { Reviews, SpotImages, ...spotData } = spot.get(); //.get() is used to extract a plain object from the sequelize instance
+      const { Reviews, SpotImages, ...spotData } = spot.get();
 
-      const avgRating =
-        Reviews.length > 0
-          ? Reviews.reduce((acc, review) => acc + review.stars, 0) /
-            Reviews.length
-          : 0;
+      let avgRating = 0;
+      if (Reviews.length > 0) {
+        avgRating =
+          Reviews.reduce((acc, review) => acc + review.stars, 0) /
+          Reviews.length;
+      }
 
-      const previewImage = SpotImages.length > 0 ? SpotImages[0].url : null;
+      let previewImage = null;
+      if (SpotImages.length > 0) {
+        previewImage = SpotImages[0].url;
+      }
 
       return {
         ...spotData,
@@ -44,18 +47,18 @@ router.get("/", async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ message: "An error occurred while retrieving spots" }); //In case I mess up the code, you can set a console log before this to trace the error
+      .json({ message: "An error occurred while retrieving spots" });
   }
 });
 
 //Get all Spots owned by the Current User
 router.get("/current", requireAuth, async (req, res) => {
   try {
-    const currentUserId = req.user.id; //This calls our requireAuth middleware to get the current user id if there is a user logged in
+    const currentUserId = req.user.id;
 
     const spots = await Spot.findAll({
       where: {
-        ownerId: currentUserId, //Find all spots, but ONLY get spots owned by the current user
+        ownerId: currentUserId,
       },
       include: [
         {
@@ -72,12 +75,19 @@ router.get("/current", requireAuth, async (req, res) => {
 
     const formattedSpots = spots.map((spot) => {
       const { Reviews, SpotImages, ...spotData } = spot.get();
-      const avgRating =
-        Reviews.length > 0
-          ? Reviews.reduce((acc, review) => acc + review.stars, 0) /
-            Reviews.length
-          : 0;
-      const previewImage = SpotImages.length > 0 ? SpotImages[0].url : null;
+
+      let avgRating = 0;
+      if (Reviews.length > 0) {
+        avgRating =
+          Reviews.reduce((acc, review) => acc + review.stars, 0) /
+          Reviews.length;
+      }
+
+      let previewImage = null;
+      if (SpotImages.length > 0) {
+        previewImage = SpotImages[0].url;
+      }
+
       return {
         ...spotData,
         avgRating,
