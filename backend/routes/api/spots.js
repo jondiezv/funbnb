@@ -7,7 +7,6 @@ const {
   restoreUser,
   requireAuth,
 } = require("../../utils/auth");
-
 const router = express.Router();
 
 //Return all spots
