@@ -257,4 +257,93 @@ router.post("/:spotId/images", requireAuth, async (req, res, next) => {
   }
 });
 
+//Edit a Spot
+const validateSpotUpdate = [
+  check("address")
+    .exists({ checkFalsy: true })
+    .withMessage("Street address is required"),
+  check("city").exists({ checkFalsy: true }).withMessage("City is required"),
+  check("state").exists({ checkFalsy: true }).withMessage("State is required"),
+  check("country")
+    .exists({ checkFalsy: true })
+    .withMessage("Country is required"),
+  check("lat").isFloat().withMessage("Latitude is not valid"),
+  check("lng").isFloat().withMessage("Longitude is not valid"),
+  check("name")
+    .isLength({ max: 50 })
+    .withMessage("Name must be less than 50 characters"),
+  check("description")
+    .exists({ checkFalsy: true })
+    .withMessage("Description is required"),
+  check("price").isInt({ min: 0 }).withMessage("Price per day is required"),
+  handleValidationErrors,
+];
+
+router.put(
+  "/:spotId",
+  requireAuth,
+  validateSpotUpdate,
+  async (req, res, next) => {
+    const {
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price,
+    } = req.body;
+
+    const spotId = parseInt(req.params.spotId, 10);
+
+    try {
+      const spot = await Spot.findByPk(spotId);
+
+      if (!spot) {
+        return res.status(404).json({
+          message: "Spot couldn't be found",
+        });
+      }
+
+      if (spot.ownerId !== req.user.id) {
+        return res.status(403).json({
+          message: "You are not authorized to update this spot.",
+        });
+      }
+
+      spot.address = address;
+      spot.city = city;
+      spot.state = state;
+      spot.country = country;
+      spot.lat = lat;
+      spot.lng = lng;
+      spot.name = name;
+      spot.description = description;
+      spot.price = price;
+
+      await spot.save();
+
+      return res.status(200).json({
+        id: spot.id,
+        ownerId: spot.ownerId,
+        address: spot.address,
+        city: spot.city,
+        state: spot.state,
+        country: spot.country,
+        lat: spot.lat,
+        lng: spot.lng,
+        name: spot.name,
+        description: spot.description,
+        price: spot.price,
+        createdAt: spot.createdAt,
+        updatedAt: spot.updatedAt,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
 module.exports = router;
