@@ -34,7 +34,6 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
-        // Add more entries as you like
       ],
       { validate: true }
     );
