@@ -383,13 +383,11 @@ router.get("/:spotId/reviews", async (req, res) => {
   try {
     const { spotId } = req.params;
 
-    // Validate that the spot exists
     const spot = await Spot.findByPk(spotId);
     if (!spot) {
       return res.status(404).json({ message: "Spot couldn't be found" });
     }
 
-    // Fetch all reviews for this spot, including associated User and ReviewImages data
     const reviews = await Review.findAll({
       where: { spotId },
       include: [
@@ -406,7 +404,6 @@ router.get("/:spotId/reviews", async (req, res) => {
 
     res.status(200).json({ Reviews: reviews });
   } catch (err) {
-    console.error(err);
     res
       .status(500)
       .json({ message: "An error occurred while fetching reviews" });
