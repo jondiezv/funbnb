@@ -5,6 +5,7 @@ const {
   SpotImage,
   User,
   ReviewImage,
+  Booking,
 } = require("../../db/models"); //Always remember to import the models you are going to need in your endpoints!
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
@@ -449,5 +450,75 @@ router.post(
     return res.status(201).json(newReview);
   }
 );
+
+router.get("/:spotId/bookings", requireAuth, async (req, res, next) => {
+  const spotId = parseInt(req.params.spotId, 10);
+  const currentUserId = req.user.id;
+
+  try {
+    const spot = await Spot.findByPk(spotId);
+    if (!spot) {
+      return res.status(404).json({ message: "Spot couldn't be found" });
+    }
+
+    let bookings;
+    if (spot.ownerId === currentUserId) {
+      bookings = await Booking.findAll({
+        where: { spotId },
+        attributes: [
+          "id",
+          "userId",
+          "spotId",
+          "startDate",
+          "endDate",
+          "createdAt",
+          "updatedAt",
+        ],
+        include: [
+          {
+            model: User,
+            attributes: ["id", "firstName", "lastName"],
+          },
+        ],
+      });
+    } else {
+      bookings = await Booking.findAll({
+        where: { spotId },
+        attributes: ["spotId", "startDate", "endDate"],
+      });
+    }
+
+    const formattedBookings = bookings.map((booking) => {
+      const plainBooking = booking.get({ plain: true });
+
+      if (spot.ownerId === currentUserId) {
+        return {
+          User: {
+            id: plainBooking.User.id,
+            firstName: plainBooking.User.firstName,
+            lastName: plainBooking.User.lastName,
+          },
+          id: plainBooking.id,
+          spotId: plainBooking.spotId,
+          userId: plainBooking.userId,
+          startDate: plainBooking.startDate,
+          endDate: plainBooking.endDate,
+          createdAt: plainBooking.createdAt,
+          updatedAt: plainBooking.updatedAt,
+        };
+      } else {
+        return {
+          spotId: plainBooking.spotId,
+          startDate: plainBooking.startDate,
+          endDate: plainBooking.endDate,
+        };
+      }
+    });
+
+    res.status(200).json({ Bookings: formattedBookings });
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = router;
