@@ -149,4 +149,32 @@ router.put(
   }
 );
 
+//Delete a review
+router.delete("/:reviewId", requireAuth, async (req, res, next) => {
+  const reviewId = parseInt(req.params.reviewId, 10);
+  const userId = req.user.id;
+
+  try {
+    const existingReview = await Review.findByPk(reviewId);
+
+    if (!existingReview) {
+      return res.status(404).json({ message: "Review couldn't be found" });
+    }
+
+    if (existingReview.userId !== userId) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    /*Manually delete all related ReviewImage records before deleting the Review
+    Otherwise I'll get a SQLITE constraint error*/
+    await ReviewImage.destroy({ where: { reviewId: existingReview.id } });
+
+    await existingReview.destroy();
+
+    res.status(200).json({ message: "Successfully deleted" });
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
