@@ -99,4 +99,82 @@ router.post(
   }
 );
 
+//Edit a Review
+router.put(
+  "/:reviewId",
+  requireAuth,
+  [
+    check("review").notEmpty().withMessage("Review text is required"),
+    check("stars")
+      .isInt({ min: 1, max: 5 })
+      .withMessage("Stars must be an integer from 1 to 5"),
+  ],
+  handleValidationErrors,
+  async (req, res, next) => {
+    const reviewId = parseInt(req.params.reviewId, 10);
+    const { review, stars } = req.body;
+    const userId = req.user.id;
+
+    try {
+      const existingReview = await Review.findByPk(reviewId);
+
+      if (!existingReview) {
+        return res.status(404).json({ message: "Review couldn't be found" });
+      }
+
+      if (existingReview.userId !== userId) {
+        return res.status(403).json({ message: "Not authorized" });
+      }
+
+      existingReview.review = review;
+      existingReview.stars = stars;
+      await existingReview.save();
+
+      res.status(200).json({
+        id: existingReview.id,
+        userId: existingReview.userId,
+        spotId: existingReview.spotId,
+        review: existingReview.review,
+        stars: existingReview.stars,
+        createdAt: existingReview.createdAt,
+        updatedAt: existingReview.updatedAt,
+      });
+    } catch (err) {
+      if (err.name === "SequelizeValidationError") {
+        const errors = err.errors.map((e) => e.message);
+        return res.status(400).json({ message: "Validation error", errors });
+      }
+      next(err);
+    }
+  }
+);
+
+//Delete a review
+router.delete("/:reviewId", requireAuth, async (req, res, next) => {
+  const reviewId = parseInt(req.params.reviewId, 10);
+  const userId = req.user.id;
+
+  try {
+    const existingReview = await Review.findByPk(reviewId);
+
+    if (!existingReview) {
+      return res.status(404).json({ message: "Review couldn't be found" });
+    }
+
+    if (existingReview.userId !== userId) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    /*Manually delete all related ReviewImage records before deleting the Review
+    Otherwise I'll get a SQLITE constraint error*/
+    await ReviewImage.destroy({ where: { reviewId: existingReview.id } });
+
+    await existingReview.destroy();
+
+    res.status(200).json({ message: "Successfully deleted" });
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
