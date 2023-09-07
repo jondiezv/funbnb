@@ -7,7 +7,7 @@ const {
   ReviewImage,
   Booking,
 } = require("../../db/models"); //Always remember to import the models you are going to need in your endpoints!
-const { check } = require("express-validator");
+const { check, query, validationResult } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 const {
   setTokenCookie,
@@ -17,50 +17,71 @@ const {
 const router = express.Router();
 const { Op } = require("sequelize");
 
-//Return all spots
-router.get("/", async (req, res) => {
-  try {
-    const spots = await Spot.findAll({
-      include: [
-        {
-          model: Review,
-          attributes: ["stars"],
-        },
-        {
-          model: SpotImage,
-          where: { preview: true },
-          required: false,
-        },
-      ],
-    });
+//Get all spots with query params
+router.get(
+  "/",
+  [
+    query("page").optional().isInt({ min: 1 }),
+    query("size").optional().isInt({ min: 1, max: 100 }),
+    query("minPrice").optional().isFloat({ min: 0 }),
+    query("maxPrice").optional().isFloat({ min: 0 }),
+    query("minLat").optional().isFloat(),
+    query("maxLat").optional().isFloat(),
+    query("minLng").optional().isFloat(),
+    query("maxLng").optional().isFloat(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-    const formattedSpots = spots.map((spot) => {
-      const { Reviews, SpotImages, ...spotData } = spot.get();
+    try {
+      let { page, size, minPrice, maxPrice, minLat, maxLat, minLng, maxLng } =
+        req.query;
 
-      let avgRating = 0;
-      if (Reviews.length > 0) {
-        avgRating =
-          Reviews.reduce((acc, review) => acc + review.stars, 0) /
-          Reviews.length;
-      }
+      page = parseInt(page) || 1;
+      size = parseInt(size) || 20;
+      const whereClause = {};
 
-      let previewImage = null;
-      if (SpotImages.length > 0) {
-        previewImage = SpotImages[0].url;
-      }
+      if (minPrice !== undefined) whereClause.price = { [Op.gte]: minPrice };
+      if (maxPrice !== undefined)
+        whereClause.price = { ...whereClause.price, [Op.lte]: maxPrice };
+      if (minLat !== undefined) whereClause.lat = { [Op.gte]: minLat };
+      if (maxLat !== undefined)
+        whereClause.lat = { ...whereClause.lat, [Op.lte]: maxLat };
+      if (minLng !== undefined) whereClause.lng = { [Op.gte]: minLng };
+      if (maxLng !== undefined)
+        whereClause.lng = { ...whereClause.lng, [Op.lte]: maxLng };
 
-      return {
-        ...spotData,
-        avgRating,
-        previewImage,
-      };
-    });
+      const spots = await Spot.findAll({
+        where: whereClause,
+        include: [
+          { model: Review, attributes: ["stars"] },
+          { model: SpotImage, where: { preview: true }, required: false },
+        ],
+        limit: size,
+        offset: (page - 1) * size,
+      });
 
-    res.status(200).json({ Spots: formattedSpots });
-  } catch (error) {
-    res.status(500).json({ message: "Could not retrieve spots" });
+      const formattedSpots = spots.map((spot) => {
+        const { Reviews, SpotImages, ...spotData } = spot.get();
+        const avgRating =
+          Reviews.length > 0
+            ? Reviews.reduce((acc, review) => acc + review.stars, 0) /
+              Reviews.length
+            : 0;
+        const previewImage = SpotImages.length > 0 ? SpotImages[0].url : null;
+
+        return { ...spotData, avgRating, previewImage };
+      });
+
+      res.status(200).json({ Spots: formattedSpots, page, size });
+    } catch (error) {
+      res.status(500).json({ message: "Could not retrieve spots" });
+    }
   }
-});
+);
 
 //Get all Spots owned by the Current User
 router.get("/current", requireAuth, async (req, res) => {
@@ -108,7 +129,7 @@ router.get("/current", requireAuth, async (req, res) => {
 
     res.status(200).json({ Spots: formattedSpots });
   } catch (error) {
-    res.status(500).json({ message: "Could not retrieve spots" });
+    res.status(500).json({ message: "Error getting data" }); //If I hit this then it's likely a logic error
   }
 });
 
@@ -160,7 +181,7 @@ router.get("/:spotId", async (req, res) => {
 
     res.status(200).json(formattedSpot);
   } catch (error) {
-    res.status(500).json({ message: "Could not retrieve spots" });
+    res.status(500).json({ message: "Error getting data" }); //If I hit this then it's likely a logic error
   }
 });
 
@@ -407,9 +428,7 @@ router.get("/:spotId/reviews", async (req, res) => {
 
     res.status(200).json({ Reviews: reviews });
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "An error occurred while fetching reviews" });
+    res.status(500).json({ message: "An error occurred" });
   }
 });
 
