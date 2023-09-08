@@ -40,8 +40,18 @@ router.get(
       let { page, size, minPrice, maxPrice, minLat, maxLat, minLng, maxLng } =
         req.query;
 
-      page = parseInt(page) || 1;
-      size = parseInt(size) || 20;
+      if (!page) {
+        page = 1;
+      } else {
+        page = parseInt(page);
+      }
+
+      if (!size) {
+        size = 20;
+      } else {
+        size = parseInt(size);
+      }
+
       const whereClause = {};
 
       if (minPrice !== undefined) whereClause.price = { [Op.gte]: minPrice };
@@ -66,19 +76,25 @@ router.get(
 
       const formattedSpots = spots.map((spot) => {
         const { Reviews, SpotImages, ...spotData } = spot.get();
-        const avgRating =
-          Reviews.length > 0
-            ? Reviews.reduce((acc, review) => acc + review.stars, 0) /
-              Reviews.length
-            : 0;
-        const previewImage = SpotImages.length > 0 ? SpotImages[0].url : null;
+
+        let avgRating = 0;
+        if (Reviews.length > 0) {
+          avgRating =
+            Reviews.reduce((acc, review) => acc + review.stars, 0) /
+            Reviews.length;
+        }
+
+        let previewImage = null;
+        if (SpotImages.length > 0) {
+          previewImage = SpotImages[0].url;
+        }
 
         return { ...spotData, avgRating, previewImage };
       });
 
       res.status(200).json({ Spots: formattedSpots, page, size });
     } catch (error) {
-      res.status(500).json({ message: "Could not retrieve spots" });
+      res.status(500).json({ message: "Error getting data" }); //If I hit this then it's likely a logic error
     }
   }
 );
@@ -530,8 +546,8 @@ router.get("/:spotId/bookings", requireAuth, async (req, res, next) => {
       } else {
         return {
           spotId: plainBooking.spotId,
-          startDate: plainBooking.startDate,
-          endDate: plainBooking.endDate,
+          startDate: plainBooking.startDate.toISOString().split("T")[0],
+          endDate: plainBooking.endDate.toISOString().split("T")[0],
         };
       }
     });
@@ -611,8 +627,8 @@ router.post("/:spotId/bookings", requireAuth, async (req, res, next) => {
       id: newBooking.id,
       spotId: newBooking.spotId,
       userId: newBooking.userId,
-      startDate: newBooking.startDate,
-      endDate: newBooking.endDate,
+      startDate: newBooking.startDate.toISOString().split("T")[0],
+      endDate: newBooking.endDate.toISOString().split("T")[0],
       createdAt: newBooking.createdAt,
       updatedAt: newBooking.updatedAt,
     });

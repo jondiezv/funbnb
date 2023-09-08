@@ -14,24 +14,59 @@ module.exports = {
       [
         {
           email: "demo@user.io",
-          username: "Demoman",
+          username: "DemoMan",
           firstName: "Demo",
           lastName: "Man",
           hashedPassword: bcrypt.hashSync("password"),
         },
         {
           email: "falloutguy@user.io",
-          username: "Falloutguy",
+          username: "FalloutGuy",
           firstName: "Fallout",
           lastName: "Guy",
           hashedPassword: bcrypt.hashSync("password2"),
         },
         {
           email: "spyman@user.io",
-          username: "Spyman",
+          username: "SpyMan",
           firstName: "Spy",
           lastName: "Man",
           hashedPassword: bcrypt.hashSync("password3"),
+        },
+        {
+          email: "musiclover@user.io",
+          username: "MusicLover",
+          firstName: "Melody",
+          lastName: "Harmon",
+          hashedPassword: bcrypt.hashSync("password4"),
+        },
+        {
+          email: "traveljunkie@user.io",
+          username: "TravelJunkie",
+          firstName: "Travis",
+          lastName: "Wander",
+          hashedPassword: bcrypt.hashSync("password5"),
+        },
+        {
+          email: "codingmaster@user.io",
+          username: "CodeMaster",
+          firstName: "Cody",
+          lastName: "Script",
+          hashedPassword: bcrypt.hashSync("password6"),
+        },
+        {
+          email: "fitnessfreak@user.io",
+          username: "FitFreak",
+          firstName: "Felicia",
+          lastName: "Run",
+          hashedPassword: bcrypt.hashSync("password7"),
+        },
+        {
+          email: "gamerpro@user.io",
+          username: "GamePro",
+          firstName: "Gavin",
+          lastName: "Plays",
+          hashedPassword: bcrypt.hashSync("password8"),
         },
       ],
       { validate: true }
@@ -44,7 +79,18 @@ module.exports = {
     return queryInterface.bulkDelete(
       options,
       {
-        username: { [Op.in]: ["Demoman", "Falloutguy", "Spyman"] },
+        username: {
+          [Op.in]: [
+            "Demoman",
+            "Falloutguy",
+            "Spyman",
+            "MusicLover",
+            "TravelJunkie",
+            "CodeMaster",
+            "FitFreak",
+            "GamePro",
+          ],
+        },
       },
       {}
     );
