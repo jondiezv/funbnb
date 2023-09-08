@@ -23,40 +23,20 @@ router.get("/current", requireAuth, async (req, res, next) => {
 
   try {
     const bookings = await Booking.findAll({
-      where: { userId },
+      where: {
+        userId,
+      },
       include: [
         {
           model: Spot,
-          attributes: [
-            "id",
-            "ownerId",
-            "address",
-            "city",
-            "state",
-            "country",
-            "lat",
-            "lng",
-            "name",
-            "price",
-          ],
-          include: [
-            {
-              model: SpotImage,
-              where: { preview: true },
-              attributes: ["url"],
-              required: false,
+          include: {
+            model: SpotImage,
+            where: {
+              preview: true,
             },
-          ],
+            required: false,
+          },
         },
-      ],
-      attributes: [
-        "id",
-        "spotId",
-        "userId",
-        "startDate",
-        "endDate",
-        "createdAt",
-        "updatedAt",
       ],
     });
 
@@ -70,40 +50,20 @@ router.get("/current", requireAuth, async (req, res, next) => {
         plainBooking.Spot.previewImage = plainBooking.Spot.SpotImages[0].url;
       }
 
+      delete plainBooking.Spot.createdAt;
+      delete plainBooking.Spot.updatedAt;
+      delete plainBooking.Spot.description;
       delete plainBooking.Spot.SpotImages;
 
-      const {
-        id,
-        spotId,
-        userId,
-        startDate,
-        endDate,
-        createdAt,
-        updatedAt,
-        Spot,
-      } = plainBooking;
-
       return {
-        id,
-        spotId,
-        Spot: {
-          id: Spot.id,
-          ownerId: Spot.ownerId,
-          address: Spot.address,
-          city: Spot.city,
-          state: Spot.state,
-          country: Spot.country,
-          lat: Spot.lat,
-          lng: Spot.lng,
-          name: Spot.name,
-          price: Spot.price,
-          previewImage: Spot.previewImage,
-        },
-        userId,
-        startDate: startDate.toISOString().split("T")[0],
-        endDate: endDate.toISOString().split("T")[0],
-        createdAt,
-        updatedAt,
+        id: plainBooking.id,
+        spotId: plainBooking.spotId,
+        Spot: plainBooking.Spot,
+        userId: plainBooking.userId,
+        startDate: plainBooking.startDate.toISOString().split("T")[0],
+        endDate: plainBooking.endDate.toISOString().split("T")[0],
+        createdAt: plainBooking.createdAt,
+        updatedAt: plainBooking.updatedAt,
       };
     });
 

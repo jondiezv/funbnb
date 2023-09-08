@@ -47,16 +47,63 @@ router.get("/current", requireAuth, async (req, res) => {
             },
           ],
         },
+        {
+          model: ReviewImage,
+          attributes: ["id", "url"],
+        },
       ],
     });
 
-    if (reviews) {
-      res.status(200).json({ Reviews: reviews });
-    } else {
-      res.status(404).json({ error: "No reviews found for current user" });
+    if (!reviews) {
+      return res
+        .status(404)
+        .json({ error: "No reviews found for current user" });
     }
+
+    const formattedReviews = reviews.map((review) => {
+      const {
+        id,
+        spotId,
+        userId,
+        review: reviewText,
+        stars,
+        createdAt,
+        updatedAt,
+        User,
+        Spot,
+        ReviewImages,
+      } = review.toJSON();
+
+      let previewImage = null;
+      if (Spot.SpotImages && Spot.SpotImages.length > 0) {
+        previewImage = Spot.SpotImages[0].url;
+      }
+
+      const { SpotImages, ...restOfSpot } = Spot;
+
+      return {
+        id,
+        userId,
+        spotId,
+        review: reviewText,
+        stars,
+        createdAt,
+        updatedAt,
+        User,
+        Spot: {
+          ...restOfSpot,
+          previewImage,
+        },
+        ReviewImages,
+      };
+    });
+
+    res.status(200).json({ Reviews: formattedReviews });
   } catch (err) {
-    res.status(500).json({ error: "Error occurred while fetching reviews" });
+    console.log("Error:", err);
+    res
+      .status(500)
+      .json({ error: "If you hit this error check your code logic" });
   }
 });
 

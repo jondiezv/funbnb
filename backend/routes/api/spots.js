@@ -546,8 +546,8 @@ router.get("/:spotId/bookings", requireAuth, async (req, res, next) => {
       } else {
         return {
           spotId: plainBooking.spotId,
-          startDate: plainBooking.startDate.toISOString().split("T")[0],
-          endDate: plainBooking.endDate.toISOString().split("T")[0],
+          startDate: plainBooking.startDate,
+          endDate: plainBooking.endDate,
         };
       }
     });
