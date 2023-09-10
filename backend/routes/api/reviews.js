@@ -79,7 +79,8 @@ router.get("/current", requireAuth, async (req, res) => {
         previewImage = Spot.SpotImages[0].url;
       }
 
-      const { SpotImages, ...restOfSpot } = Spot;
+      // Destructuring to get Spot attributes and convert them to numbers
+      const { SpotImages, lat, lng, price, ...restOfSpot } = Spot;
 
       return {
         id,
@@ -92,6 +93,9 @@ router.get("/current", requireAuth, async (req, res) => {
         User,
         Spot: {
           ...restOfSpot,
+          lat: parseFloat(lat),
+          lng: parseFloat(lng),
+          price: parseFloat(price),
           previewImage,
         },
         ReviewImages,
