@@ -79,7 +79,7 @@ router.get("/current", requireAuth, async (req, res) => {
         previewImage = Spot.SpotImages[0].url;
       }
 
-      const { SpotImages, ...restOfSpot } = Spot;
+      const { SpotImages, lat, lng, price, ...restOfSpot } = Spot;
 
       return {
         id,
@@ -92,6 +92,9 @@ router.get("/current", requireAuth, async (req, res) => {
         User,
         Spot: {
           ...restOfSpot,
+          lat: parseFloat(lat),
+          lng: parseFloat(lng),
+          price: parseFloat(price),
           previewImage,
         },
         ReviewImages,
@@ -212,8 +215,6 @@ router.delete("/:reviewId", requireAuth, async (req, res, next) => {
       return res.status(403).json({ message: "Not authorized" });
     }
 
-    /*Manually delete all related ReviewImage records before deleting the Review
-    Otherwise I'll get a SQLITE constraint error*/
     await ReviewImage.destroy({ where: { reviewId: existingReview.id } });
 
     await existingReview.destroy();
