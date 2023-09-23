@@ -47,9 +47,14 @@ li > div {
 
 .session-links {
   display: flex;
-  gap: 16px; /* Spacing between buttons */
+  gap: 16px;
 }
 
 .profile-dropdown li {
   color: white;
+  cursor: pointer;
+}
+
+.profile-dropdown li:hover {
+  background-color: rgba(0, 0, 0, 0.2);
 }
