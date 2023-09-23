@@ -44,3 +44,12 @@ li > div {
 .hidden {
   display: none;
 }
+
+.session-links {
+  display: flex;
+  gap: 16px; /* Spacing between buttons */
+}
+
+.profile-dropdown li {
+  color: white;
+}
