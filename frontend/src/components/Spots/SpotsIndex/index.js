@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { fetchAllSpots } from "../../../store/spots";
 import "./SpotsIndex.css";
 
-export const SpotsIndex = () => {
+const SpotsIndex = () => {
   const dispatch = useDispatch();
-
   const spots = useSelector((state) =>
     Object.values(state.spots?.allSpots || {})
   );
@@ -17,19 +17,25 @@ export const SpotsIndex = () => {
   return (
     <div>
       {spots.map((spot) => (
-        <div key={spot.id} className="spotCard">
-          <img
-            src={spot.previewImage}
-            alt="Spot thumbnail"
-            className="spotImage"
-          />
-          <div>
-            {spot.city}, {spot.state}
+        <Link to={`/spots/${spot.id}`} key={spot.id}>
+          <div className="spotCard">
+            <img
+              src={spot.previewImage}
+              alt="Spot thumbnail"
+              className="spotImage"
+            />
+            <div>
+              {spot.city}, {spot.state}
+            </div>
+            <div title={spot.name}>
+              {spot.name}
+              <span className="avgRating">
+                ★ {spot.avgRating ? spot.avgRating.toFixed(2) : "New"}
+              </span>
+            </div>
+            <div>{spot.price} night</div>
           </div>
-          <div title={spot.name}>{spot.name}</div>
-          <div>{spot.avgRating ? spot.avgRating.toFixed(2) : "New"}</div>
-          <div>{spot.price} night</div>
-        </div>
+        </Link>
       ))}
     </div>
   );

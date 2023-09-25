@@ -12,7 +12,7 @@ const spotImages = [
   {
     spotId: 1,
     preview: true,
-    url: "https://example.com/spot-image1.jpg",
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
   },
   {
     spotId: 2,
