@@ -1,0 +1,14 @@
+.spotCard {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 16px;
+  padding: 16px;
+  display: inline-block;
+  width: 250px;
+  text-align: center;
+}
+
+.spotImage {
+  max-width: 100%;
+  border-radius: 8px;
+}
