@@ -17,47 +17,47 @@ const spotImages = [
   {
     spotId: 2,
     preview: true,
-    url: "https://example.com/spot-image2.jpg",
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
   },
   {
     spotId: 3,
     preview: true,
-    url: "https://example.com/spot-image3.jpg",
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
   },
   {
     spotId: 4,
     preview: true,
-    url: "https://example.com/spot-image4.jpg",
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
   },
   {
     spotId: 5,
     preview: true,
-    url: "https://example.com/spot-image5.jpg",
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
   },
   {
     spotId: 6,
     preview: true,
-    url: "https://example.com/spot-image6.jpg",
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
   },
   {
     spotId: 7,
     preview: true,
-    url: "https://example.com/spot-image7.jpg",
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
   },
   {
     spotId: 8,
     preview: true,
-    url: "https://example.com/spot-image8.jpg",
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
   },
   {
     spotId: 9,
     preview: true,
-    url: "https://example.com/spot-image9.jpg",
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
   },
   {
     spotId: 10,
     preview: true,
-    url: "https://example.com/spot-image10.jpg",
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
   },
 ];
 
