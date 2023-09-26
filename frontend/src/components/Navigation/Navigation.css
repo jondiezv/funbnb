@@ -1,4 +1,4 @@
-ul {
+.navbar-ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -13,26 +13,26 @@ ul {
   align-items: center;
 }
 
-li {
+.navbar-li {
   padding: 14px 16px;
 }
 
-li a {
+.navbar-li a {
   display: block;
   color: white;
   text-align: center;
   text-decoration: none;
 }
 
-li a:hover {
+.navbar-li a:hover {
   background-color: #007bff;
 }
 
-li a.active {
+.navbar-li a.active {
   text-shadow: 6px 2px 3px #007bff;
 }
 
-li > div {
+.navbar-li > div {
   color: white;
 }
 

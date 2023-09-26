@@ -1,0 +1,92 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { fetchSpot } from "../../../store/spots";
+import { fetchReviewsForSpot } from "../../../store/reviews";
+import "./SpotDetails.css";
+
+export const SpotDetails = () => {
+  const dispatch = useDispatch();
+  const { spotId } = useParams();
+  const spot = useSelector((state) => state.spots.currentSpot);
+  const reviews = useSelector((state) =>
+    Object.values(state.reviews.spot).sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    )
+  ); // Retrieve and sort reviews from Redux store
+  const currentUser = useSelector((state) => state.session.user); // Retrieve current user
+
+  useEffect(() => {
+    dispatch(fetchSpot(spotId));
+    dispatch(fetchReviewsForSpot(spotId));
+  }, [dispatch, spotId]);
+
+  if (!spot) return null;
+
+  const avgRating = spot.avgRating ? spot.avgRating.toFixed(2) : "New";
+  const reviewLabel = spot.numReviews === 1 ? "Review" : "Reviews";
+  const reviewSummary =
+    spot.numReviews > 0
+      ? `★ ${avgRating} · (${spot.numReviews} ${reviewLabel})`
+      : `★ ${avgRating}`;
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const month = date.toLocaleString("default", { month: "long" });
+    const year = date.getFullYear();
+    return `${month} ${year}`;
+  };
+
+  return (
+    <div className="SpotDetails-container">
+      <h1>{spot.name}</h1>
+      <div className="reviewSummary">{reviewSummary}</div>
+      <div>
+        Location: {spot.city}, {spot.state}, {spot.country}
+      </div>
+      <div>
+        Images:
+        {spot.SpotImages && spot.SpotImages.length > 0 ? (
+          <div>
+            <img src={spot.SpotImages[0].url} alt={`${spot.name} main`} />
+            {spot.SpotImages.slice(1).map((image, index) => (
+              <img
+                key={index}
+                src={image.url}
+                alt={`${spot.name} ${index + 1}`}
+              />
+            ))}
+          </div>
+        ) : (
+          <div>No images available</div>
+        )}
+      </div>
+      <div>
+        Hosted by {spot.Owner.firstName}, {spot.Owner.lastName}
+      </div>
+      <div>{spot.description}</div>
+      <div>
+        <strong>{spot.price} night</strong>
+        <button onClick={() => alert("Feature coming soon")}>Reserve</button>
+      </div>
+      <h2>Reviews</h2>
+      <div className="reviewSummary">{reviewSummary}</div>
+
+      {reviews && reviews.length > 0 ? (
+        <ul className="reviews-list">
+          {reviews.map((review) => (
+            <li key={review.id}>
+              <div>{review.User.firstName}</div>
+              <div>{formatDate(review.createdAt)}</div>
+              <div>{review.review}</div>
+            </li>
+          ))}
+        </ul>
+      ) : currentUser && currentUser.id !== spot.Owner.id ? (
+        <div>Be the first to post a review!</div>
+      ) : null}
+    </div>
+  );
+};
+
+export default SpotDetails;
