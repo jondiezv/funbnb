@@ -2,14 +2,23 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchSpot } from "../../../store/spots";
+import { fetchReviewsForSpot } from "../../../store/reviews";
+import "./SpotDetails.css";
 
 export const SpotDetails = () => {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const spot = useSelector((state) => state.spots.currentSpot);
+  const reviews = useSelector((state) =>
+    Object.values(state.reviews.spot).sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    )
+  ); // Retrieve and sort reviews from Redux store
+  const currentUser = useSelector((state) => state.session.user); // Retrieve current user
 
   useEffect(() => {
     dispatch(fetchSpot(spotId));
+    dispatch(fetchReviewsForSpot(spotId));
   }, [dispatch, spotId]);
 
   if (!spot) return null;
@@ -21,8 +30,15 @@ export const SpotDetails = () => {
       ? `★ ${avgRating} · (${spot.numReviews} ${reviewLabel})`
       : `★ ${avgRating}`;
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const month = date.toLocaleString("default", { month: "long" });
+    const year = date.getFullYear();
+    return `${month} ${year}`;
+  };
+
   return (
-    <div>
+    <div className="SpotDetails-container">
       <h1>{spot.name}</h1>
       <div className="reviewSummary">{reviewSummary}</div>
       <div>
@@ -55,6 +71,20 @@ export const SpotDetails = () => {
       </div>
       <h2>Reviews</h2>
       <div className="reviewSummary">{reviewSummary}</div>
+
+      {reviews && reviews.length > 0 ? (
+        <ul className="reviews-list">
+          {reviews.map((review) => (
+            <li key={review.id}>
+              <div>{review.User.firstName}</div>
+              <div>{formatDate(review.createdAt)}</div>
+              <div>{review.review}</div>
+            </li>
+          ))}
+        </ul>
+      ) : currentUser && currentUser.id !== spot.Owner.id ? (
+        <div>Be the first to post a review!</div>
+      ) : null}
     </div>
   );
 };

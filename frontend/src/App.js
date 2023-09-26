@@ -16,16 +16,18 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      {isLoaded && (
-        <Switch>
-          <Route path="/" exact>
-            <SpotsIndex />
-          </Route>
-          <Route path="/spots/:spotId">
-            <SpotDetails />
-          </Route>
-        </Switch>
-      )}
+      <div className="main-content">
+        {isLoaded && (
+          <Switch>
+            <Route path="/" exact>
+              <SpotsIndex />
+            </Route>
+            <Route path="/spots/:spotId">
+              <SpotDetails />
+            </Route>
+          </Switch>
+        )}
+      </div>
     </>
   );
 }
