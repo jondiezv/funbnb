@@ -13,8 +13,8 @@ export const SpotDetails = () => {
     Object.values(state.reviews.spot).sort(
       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
     )
-  ); // Retrieve and sort reviews from Redux store
-  const currentUser = useSelector((state) => state.session.user); // Retrieve current user
+  );
+  const currentUser = useSelector((state) => state.session.user);
 
   useEffect(() => {
     dispatch(fetchSpot(spotId));
@@ -62,7 +62,10 @@ export const SpotDetails = () => {
         )}
       </div>
       <div>
-        Hosted by {spot.Owner.firstName}, {spot.Owner.lastName}
+        Hosted by{" "}
+        {spot.Owner
+          ? `${spot.Owner.firstName}, ${spot.Owner.lastName}`
+          : "Unknown"}
       </div>
       <div>{spot.description}</div>
       <div>
@@ -82,7 +85,7 @@ export const SpotDetails = () => {
             </li>
           ))}
         </ul>
-      ) : currentUser && currentUser.id !== spot.Owner.id ? (
+      ) : currentUser && spot.Owner && currentUser.id !== spot.Owner.id ? (
         <div>Be the first to post a review!</div>
       ) : null}
     </div>
