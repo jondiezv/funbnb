@@ -4,6 +4,7 @@ const GETALL_SPOTS = "spots/getSpots";
 const CLEAR_STATE = "spots/clearState";
 const GET_SPOT = "spots/getSpot";
 const CREATE_SPOT = "spots/createSpot";
+const GET_SPOTS_USER = "spots/getSpotsUser";
 
 export const getSpots = (spots) => ({
   type: GETALL_SPOTS,
@@ -22,6 +23,11 @@ export const getSpot = (spot) => ({
 export const createSpot = (spot) => ({
   type: CREATE_SPOT,
   spot,
+});
+
+export const getUserSpots = (spots) => ({
+  type: GET_SPOTS_USER,
+  spots,
 });
 
 export const fetchAllSpots = () => async (dispatch) => {
@@ -78,7 +84,13 @@ export const addImageToSpot = (spotId, url, preview) => async (dispatch) => {
   }
 };
 
-const initialState = { allSpots: {}, currentSpot: null };
+export const fetchUserSpots = () => async (dispatch) => {
+  const res = await csrfFetch("/api/spots/current");
+  const spots = await res.json();
+  dispatch(getUserSpots(spots.Spots));
+};
+
+const initialState = { allSpots: {}, currentSpot: null, userSpots: [] };
 
 const spotsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -103,6 +115,11 @@ const spotsReducer = (state = initialState, action) => {
           [action.spot.id]: action.spot,
         },
         currentSpot: action.spot,
+      };
+    case GET_SPOTS_USER:
+      return {
+        ...state,
+        userSpots: action.spots,
       };
     default:
       return state;
