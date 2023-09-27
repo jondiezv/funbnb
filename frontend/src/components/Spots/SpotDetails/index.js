@@ -54,15 +54,16 @@ export const SpotDetails = () => {
     return `${month} ${year}`;
   };
 
+  const isCurrentUserOwner =
+    currentUser && spot.Owner && currentUser.id === spot.Owner.id;
+
   return (
     <div className="SpotDetails-container">
       <h1>{spot.name}</h1>
-      <div className="reviewSummary">{reviewSummary}</div>
       <div>
-        Location: {spot.city}, {spot.state}, {spot.country}
+        {spot.city}, {spot.state}, {spot.country}
       </div>
       <div>
-        Images:
         {spot.SpotImages && spot.SpotImages.length > 0 ? (
           <div>
             <img src={spot.SpotImages[0].url} alt={`${spot.name} main`} />
@@ -86,13 +87,14 @@ export const SpotDetails = () => {
       </div>
       <div>{spot.description}</div>
       <div>
-        <strong>{spot.price} night</strong>
+        <strong>${spot.price} night</strong>
+        <div className="reviewSummary">{reviewSummary}</div>
         <button onClick={() => alert("Feature coming soon")}>Reserve</button>
       </div>
       <h2>Reviews</h2>
       <div className="reviewSummary">{reviewSummary}</div>
 
-      {showReviewButton && (
+      {showReviewButton && !isCurrentUserOwner && (
         <OpenModalButton
           buttonText="Post Your Review"
           modalComponent={
