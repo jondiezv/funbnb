@@ -30,7 +30,7 @@ const SpotsIndex = () => {
             <div title={spot.name}>
               {spot.name}
               <span className="avgRating">
-                ★ {spot.avgRating ? spot.avgRating.toFixed(2) : "New"}
+                ★ {spot.avgRating ? spot.avgRating.toFixed(1) : "New"}
               </span>
             </div>
             <div>{spot.price} night</div>

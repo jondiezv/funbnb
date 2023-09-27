@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createNewReview } from "../../store/reviews";
 import "./CreateReviewModal.css";
@@ -26,52 +26,60 @@ const StarRating = ({ stars, setStars }) => {
   );
 };
 
-const CreateReviewModal = ({ spotId, onClose }) => {
+const CreateReviewModal = ({ spotId, refreshReviews, setShowReviewModal }) => {
   const dispatch = useDispatch();
   const [review, setReview] = useState("");
   const [stars, setStars] = useState(0);
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors([]);
+    setErrors("");
     try {
-      const newReview = await dispatch(createNewReview(spotId, review, stars));
-      if (newReview) {
-        onClose();
-        window.location.reload();
-      } else {
-        setErrors(["Something went wrong. Please try again."]);
-      }
+      await dispatch(createNewReview(spotId, review, stars));
+      setShowReviewModal(false);
+      refreshReviews();
     } catch (error) {
-      setErrors(["An error occurred while submitting the review."]);
+      setErrors("An error occurred while submitting the review.");
     }
+  };
+
+  const closeOnOverlayClick = (e) => {
+    if (e.target.className === "modal-overlay") {
+      setShowReviewModal(false);
+    }
+  };
+
+  const stopPropagation = (e) => {
+    e.stopPropagation();
   };
 
   const isDisabled = review.length < 10 || stars === 0;
 
   return (
-    <div className="CreateReviewModal">
-      <h2>How was your stay?</h2>
-      {errors.length > 0 && <div className="errors">{errors.join(", ")}</div>}
-      <form onSubmit={handleSubmit}>
-        <textarea
-          placeholder="Leave your review here..."
-          value={review}
-          onChange={(e) => setReview(e.target.value)}
-        ></textarea>
-        <div>
-          <label>Stars:</label>
-          <StarRating stars={stars} setStars={setStars} />
-        </div>
-        <button
-          type="submit"
-          disabled={isDisabled}
-          className={isDisabled ? "disabled-button" : ""}
-        >
-          Submit Your Review
-        </button>
-      </form>
+    <div className="modal-overlay" onClick={closeOnOverlayClick}>
+      <div className="CreateReviewModal" onClick={stopPropagation}>
+        <h2>How was your stay?</h2>
+        {errors && <div className="errors">{errors}</div>}
+        <form onSubmit={handleSubmit}>
+          <textarea
+            placeholder="Leave your review here..."
+            value={review}
+            onChange={(e) => setReview(e.target.value)}
+          ></textarea>
+          <div>
+            <label>Stars:</label>
+            <StarRating stars={stars} setStars={setStars} />
+          </div>
+          <button
+            type="submit"
+            disabled={isDisabled}
+            className={isDisabled ? "disabled-button" : ""}
+          >
+            Submit Your Review
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
