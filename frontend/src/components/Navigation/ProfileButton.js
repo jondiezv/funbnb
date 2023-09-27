@@ -61,7 +61,6 @@ function ProfileButton({ user }) {
             <li>{user.email}</li>
             <li>
               <button onClick={goToManageSpots}>Manage Your Spots</button>{" "}
-              {/* Added this line */}
             </li>
             <li>
               <button onClick={logout}>Log Out</button>

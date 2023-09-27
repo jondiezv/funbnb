@@ -319,7 +319,7 @@ const validateSpotUpdate = [
   check("description")
     .exists({ checkFalsy: true })
     .withMessage("Description is required"),
-  check("price").isInt({ min: 0 }).withMessage("Price per day is required"),
+  check("price").isFloat({ min: 0 }).withMessage("Price per day is required"),
   handleValidationErrors,
 ];
 

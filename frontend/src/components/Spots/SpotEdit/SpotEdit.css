@@ -1,0 +1,64 @@
+.SpotEdit-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f4f4f4;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.SpotEdit-form {
+  display: inline-block;
+  vertical-align: top;
+  margin: 10px;
+  width: 100%;
+}
+
+.SpotEdit-form h1,
+.SpotEdit-form h2 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.SpotEdit-form input,
+.SpotEdit-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+.SpotEdit-form input:focus,
+.SpotEdit-form textarea:focus {
+  border-color: #007bff;
+}
+
+.SpotEdit-form p {
+  color: red;
+  font-size: 0.875rem;
+}
+
+.SpotEdit-form button {
+  background-color: #007bff;
+  color: white;
+  padding: 14px 20px;
+  margin: 15px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.SpotEdit-form button:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-left: 10px;
+}
