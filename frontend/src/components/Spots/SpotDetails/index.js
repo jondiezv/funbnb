@@ -1,25 +1,42 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchSpot } from "../../../store/spots";
-import { fetchReviewsForSpot } from "../../../store/reviews";
+import {
+  fetchReviewsForSpot,
+  fetchReviewsForCurrentUser,
+} from "../../../store/reviews";
 import "./SpotDetails.css";
+import OpenModalButton from "../../OpenModalButton";
+import CreateReviewModal from "../../CreateReviewModal";
 
 export const SpotDetails = () => {
   const dispatch = useDispatch();
   const { spotId } = useParams();
+  const [showReviewButton, setShowReviewButton] = useState(false);
+
   const spot = useSelector((state) => state.spots.currentSpot);
   const reviews = useSelector((state) =>
     Object.values(state.reviews.spot).sort(
       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
     )
-  ); // Retrieve and sort reviews from Redux store
-  const currentUser = useSelector((state) => state.session.user); // Retrieve current user
+  );
+  const currentUser = useSelector((state) => state.session.user);
 
   useEffect(() => {
     dispatch(fetchSpot(spotId));
     dispatch(fetchReviewsForSpot(spotId));
+    dispatch(fetchReviewsForCurrentUser());
   }, [dispatch, spotId]);
+
+  useEffect(() => {
+    if (reviews && currentUser) {
+      const hasUserReviewed = reviews.some(
+        (review) => review.userId === currentUser.id
+      );
+      setShowReviewButton(!hasUserReviewed);
+    }
+  }, [reviews, currentUser]);
 
   if (!spot) return null;
 
@@ -37,15 +54,16 @@ export const SpotDetails = () => {
     return `${month} ${year}`;
   };
 
+  const isCurrentUserOwner =
+    currentUser && spot.Owner && currentUser.id === spot.Owner.id;
+
   return (
     <div className="SpotDetails-container">
       <h1>{spot.name}</h1>
-      <div className="reviewSummary">{reviewSummary}</div>
       <div>
-        Location: {spot.city}, {spot.state}, {spot.country}
+        {spot.city}, {spot.state}, {spot.country}
       </div>
       <div>
-        Images:
         {spot.SpotImages && spot.SpotImages.length > 0 ? (
           <div>
             <img src={spot.SpotImages[0].url} alt={`${spot.name} main`} />
@@ -62,27 +80,45 @@ export const SpotDetails = () => {
         )}
       </div>
       <div>
-        Hosted by {spot.Owner.firstName}, {spot.Owner.lastName}
+        Hosted by{" "}
+        {spot.Owner
+          ? `${spot.Owner.firstName}, ${spot.Owner.lastName}`
+          : "Unknown"}
       </div>
       <div>{spot.description}</div>
       <div>
-        <strong>{spot.price} night</strong>
+        <strong>${spot.price} night</strong>
+        <div className="reviewSummary">{reviewSummary}</div>
         <button onClick={() => alert("Feature coming soon")}>Reserve</button>
       </div>
       <h2>Reviews</h2>
       <div className="reviewSummary">{reviewSummary}</div>
 
+      {showReviewButton && !isCurrentUserOwner && (
+        <OpenModalButton
+          buttonText="Post Your Review"
+          modalComponent={
+            <CreateReviewModal spotId={spotId} onClose={() => {}} />
+          }
+        />
+      )}
+
       {reviews && reviews.length > 0 ? (
         <ul className="reviews-list">
-          {reviews.map((review) => (
-            <li key={review.id}>
-              <div>{review.User.firstName}</div>
-              <div>{formatDate(review.createdAt)}</div>
-              <div>{review.review}</div>
-            </li>
-          ))}
+          {reviews.map((review) => {
+            if (!review || !review.User) {
+              return null;
+            }
+            return (
+              <li key={review.id}>
+                <div>{review.User.firstName}</div>
+                <div>{formatDate(review.createdAt)}</div>
+                <div>{review.review}</div>
+              </li>
+            );
+          })}
         </ul>
-      ) : currentUser && currentUser.id !== spot.Owner.id ? (
+      ) : currentUser && spot.Owner && currentUser.id !== spot.Owner.id ? (
         <div>Be the first to post a review!</div>
       ) : null}
     </div>

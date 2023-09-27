@@ -1,0 +1,19 @@
+.star-rating {
+  display: inline-block;
+}
+
+.star {
+  cursor: pointer;
+  font-size: 24px;
+  color: grey;
+  transition: color 0.2s ease;
+}
+
+.star.active {
+  color: gold;
+}
+
+.disabled-button {
+  background-color: grey;
+  cursor: not-allowed;
+}
