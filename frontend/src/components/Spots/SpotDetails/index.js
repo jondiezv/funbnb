@@ -1,13 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchSpot } from "../../../store/spots";
-import { fetchReviewsForSpot } from "../../../store/reviews";
+import {
+  fetchReviewsForSpot,
+  fetchReviewsForCurrentUser,
+} from "../../../store/reviews";
 import "./SpotDetails.css";
+import OpenModalButton from "../../OpenModalButton";
+import CreateReviewModal from "../../CreateReviewModal";
 
 export const SpotDetails = () => {
   const dispatch = useDispatch();
   const { spotId } = useParams();
+  const [showReviewButton, setShowReviewButton] = useState(false);
+
   const spot = useSelector((state) => state.spots.currentSpot);
   const reviews = useSelector((state) =>
     Object.values(state.reviews.spot).sort(
@@ -19,7 +26,17 @@ export const SpotDetails = () => {
   useEffect(() => {
     dispatch(fetchSpot(spotId));
     dispatch(fetchReviewsForSpot(spotId));
+    dispatch(fetchReviewsForCurrentUser());
   }, [dispatch, spotId]);
+
+  useEffect(() => {
+    if (reviews && currentUser) {
+      const hasUserReviewed = reviews.some(
+        (review) => review.userId === currentUser.id
+      );
+      setShowReviewButton(!hasUserReviewed);
+    }
+  }, [reviews, currentUser]);
 
   if (!spot) return null;
 
@@ -75,15 +92,29 @@ export const SpotDetails = () => {
       <h2>Reviews</h2>
       <div className="reviewSummary">{reviewSummary}</div>
 
+      {showReviewButton && (
+        <OpenModalButton
+          buttonText="Post Your Review"
+          modalComponent={
+            <CreateReviewModal spotId={spotId} onClose={() => {}} />
+          }
+        />
+      )}
+
       {reviews && reviews.length > 0 ? (
         <ul className="reviews-list">
-          {reviews.map((review) => (
-            <li key={review.id}>
-              <div>{review.User.firstName}</div>
-              <div>{formatDate(review.createdAt)}</div>
-              <div>{review.review}</div>
-            </li>
-          ))}
+          {reviews.map((review) => {
+            if (!review || !review.User) {
+              return null;
+            }
+            return (
+              <li key={review.id}>
+                <div>{review.User.firstName}</div>
+                <div>{formatDate(review.createdAt)}</div>
+                <div>{review.review}</div>
+              </li>
+            );
+          })}
         </ul>
       ) : currentUser && spot.Owner && currentUser.id !== spot.Owner.id ? (
         <div>Be the first to post a review!</div>
