@@ -3,17 +3,14 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Review extends Model {
     static associate(models) {
-      //A Review belongs to a single user
       Review.belongsTo(models.User, {
         foreignKey: "userId",
       });
 
-      //A Review belongs to a single spot
       Review.belongsTo(models.Spot, {
         foreignKey: "spotId",
       });
 
-      //A Review can have many review images
       Review.hasMany(models.ReviewImage, {
         foreignKey: "reviewId",
       });

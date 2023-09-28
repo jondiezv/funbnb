@@ -3,12 +3,10 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Booking extends Model {
     static associate(models) {
-      //Each Booking belongs to one user
       Booking.belongsTo(models.User, {
         foreignKey: "userId",
       });
 
-      //Each Booking belongs to one spot
       Booking.belongsTo(models.Spot, {
         foreignKey: "spotId",
       });
