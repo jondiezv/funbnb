@@ -1,0 +1,27 @@
+.yes-delete {
+  background-color: rgb(234, 111, 111);
+  cursor: pointer;
+}
+
+.yes-delete:hover {
+  background-color: rgb(251, 2, 2);
+  cursor: pointer;
+}
+
+.no-keep {
+  background-color: darkgrey;
+}
+
+.no-keep:hover {
+  background-color: rgb(67, 66, 66);
+}
+
+.confirm-delete {
+  font-size: 20px;
+}
+
+.confirm-d {
+  text-align: center;
+  font-size: 35px;
+  margin-bottom: 30px;
+}

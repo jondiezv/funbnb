@@ -6,6 +6,7 @@ const GET_SPOT = "spots/getSpot";
 const CREATE_SPOT = "spots/createSpot";
 const GET_SPOTS_USER = "spots/getSpotsUser";
 const UPDATE_SPOT = "spots/updateSpot";
+const DELETE_SPOT = "spots/deleteSpot";
 
 export const getSpots = (spots) => ({
   type: GETALL_SPOTS,
@@ -34,6 +35,11 @@ export const getUserSpots = (spots) => ({
 export const updateSpot = (spot) => ({
   type: UPDATE_SPOT,
   spot,
+});
+
+export const deleteSpot = (spotId) => ({
+  type: DELETE_SPOT,
+  spotId,
 });
 
 export const fetchAllSpots = () => async (dispatch) => {
@@ -112,6 +118,19 @@ export const fetchUserSpots = () => async (dispatch) => {
   dispatch(getUserSpots(spots.Spots));
 };
 
+export const deleteExistingSpot = (spotId) => async (dispatch) => {
+  const res = await csrfFetch(`/api/spots/${spotId}`, {
+    method: "DELETE",
+  });
+
+  if (res.ok) {
+    dispatch(deleteSpot(spotId));
+    return { message: "Successfully deleted" };
+  }
+  const errors = await res.json();
+  return errors;
+};
+
 const initialState = { allSpots: {}, currentSpot: null, userSpots: [] };
 
 const spotsReducer = (state = initialState, action) => {
@@ -152,6 +171,19 @@ const spotsReducer = (state = initialState, action) => {
         },
         currentSpot: action.spot,
       };
+    case DELETE_SPOT: {
+      const { [action.spotId]: _, ...remainingSpots } = state.allSpots;
+
+      const remainingUserSpots = state.userSpots.filter(
+        (spot) => spot.id !== action.spotId
+      );
+
+      return {
+        ...state,
+        allSpots: remainingSpots,
+        userSpots: remainingUserSpots,
+      };
+    }
     default:
       return state;
   }

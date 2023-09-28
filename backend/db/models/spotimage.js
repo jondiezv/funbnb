@@ -5,7 +5,6 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class SpotImage extends Model {
     static associate(models) {
-      //Each spot image belongs to one spot
       SpotImage.belongsTo(models.Spot, {
         foreignKey: "spotId",
       });

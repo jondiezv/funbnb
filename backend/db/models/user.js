@@ -5,7 +5,6 @@ const { Model, Validator } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      //A user may own multiple spots
       User.hasMany(models.Spot, {
         foreignKey: "ownerId",
       });

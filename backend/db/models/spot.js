@@ -5,7 +5,6 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
     static associate(models) {
-      //Each spot belongs to one user
       Spot.belongsTo(models.User, {
         foreignKey: "ownerId",
         as: "Owner",
