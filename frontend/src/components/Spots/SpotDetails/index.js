@@ -14,6 +14,9 @@ export const SpotDetails = () => {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const [showReviewButton, setShowReviewButton] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+
+  useEffect(() => {}, [showReviewModal]);
 
   const spot = useSelector((state) => state.spots.currentSpot);
   const reviews = useSelector((state) =>
@@ -22,6 +25,14 @@ export const SpotDetails = () => {
     )
   );
   const currentUser = useSelector((state) => state.session.user);
+
+  const toggleReviewModal = () => {
+    setShowReviewModal(!showReviewModal);
+  };
+
+  const refreshReviews = () => {
+    dispatch(fetchReviewsForSpot(spotId));
+  };
 
   useEffect(() => {
     dispatch(fetchSpot(spotId));
@@ -40,7 +51,7 @@ export const SpotDetails = () => {
 
   if (!spot) return null;
 
-  const avgRating = spot.avgRating ? spot.avgRating.toFixed(2) : "New";
+  const avgRating = spot.avgRating ? spot.avgRating.toFixed(1) : "New";
   const reviewLabel = spot.numReviews === 1 ? "Review" : "Reviews";
   const reviewSummary =
     spot.numReviews > 0
@@ -95,11 +106,15 @@ export const SpotDetails = () => {
       <div className="reviewSummary">{reviewSummary}</div>
 
       {showReviewButton && !isCurrentUserOwner && (
-        <OpenModalButton
-          buttonText="Post Your Review"
-          modalComponent={
-            <CreateReviewModal spotId={spotId} onClose={() => {}} />
-          }
+        <button onClick={toggleReviewModal}>Post Your Review</button>
+      )}
+
+      {showReviewModal && (
+        <CreateReviewModal
+          spotId={spotId}
+          onClose={toggleReviewModal}
+          refreshReviews={refreshReviews}
+          setShowReviewModal={setShowReviewModal}
         />
       )}
 

@@ -6,6 +6,8 @@ import Navigation from "./components/Navigation";
 import SpotsIndex from "./components/Spots/SpotsIndex";
 import SpotDetails from "./components/Spots/SpotDetails";
 import SpotCreate from "./components/Spots/SpotCreate";
+import SpotsUserIndex from "./components/Spots/SpotsUserIndex";
+import SpotEdit from "./components/Spots/SpotEdit";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,11 +25,17 @@ function App() {
             <Route path="/" exact>
               <SpotsIndex />
             </Route>
-            <Route path="/spots/:spotId">
+            <Route path="/new-spot" exact>
+              <SpotCreate />
+            </Route>
+            <Route path="/spots/current" exact>
+              <SpotsUserIndex />
+            </Route>
+            <Route path="/spots/:spotId" exact>
               <SpotDetails />
             </Route>
-            <Route path="/new-spot">
-              <SpotCreate />
+            <Route path="/spots/:spotId/edit" exact>
+              <SpotEdit />
             </Route>
           </Switch>
         )}

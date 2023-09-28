@@ -20,7 +20,7 @@ const siteSpots = [
     name: "Orlando Lakeside Retreat",
     description:
       "A tranquil lakeside retreat located in the heart of Orlando. Perfect for a weekend getaway.",
-    price: 20.5,
+    price: 300.5,
   },
   {
     ownerId: 2,
@@ -33,7 +33,7 @@ const siteSpots = [
     name: "Golden Gate View Loft",
     description:
       "Located in downtown San Francisco, this loft offers a stunning view of the Golden Gate Bridge. Ideal for tourists and business travelers alike.",
-    price: 25.75,
+    price: 150,
   },
   {
     ownerId: 3,
@@ -45,7 +45,7 @@ const siteSpots = [
     lng: -118.2437,
     name: "LA Oasis",
     description: "Experience the LA lifestyle.",
-    price: 30.5,
+    price: 160,
   },
   {
     ownerId: 4,
@@ -57,7 +57,7 @@ const siteSpots = [
     lng: -74.006,
     name: "Central Spot",
     description: "Close to everything you need in NY.",
-    price: 35.75,
+    price: 450,
   },
   {
     ownerId: 5,
@@ -69,7 +69,7 @@ const siteSpots = [
     lng: -121.8863,
     name: "Tech Haven",
     description: "For those who love technology.",
-    price: 40.0,
+    price: 240,
   },
   {
     ownerId: 6,
@@ -81,7 +81,7 @@ const siteSpots = [
     lng: -96.797,
     name: "Cowboy Lounge",
     description: "Experience southern hospitality.",
-    price: 25.0,
+    price: 240,
   },
   {
     ownerId: 7,
@@ -93,7 +93,7 @@ const siteSpots = [
     lng: -87.6298,
     name: "Windy Haven",
     description: "In the heart of Chicago.",
-    price: 33.5,
+    price: 145.59,
   },
   {
     ownerId: 8,
@@ -105,7 +105,7 @@ const siteSpots = [
     lng: -86.7816,
     name: "Music City Spot",
     description: "For the love of music.",
-    price: 22.5,
+    price: 200,
   },
   {
     ownerId: 1,
@@ -117,7 +117,7 @@ const siteSpots = [
     lng: -80.1918,
     name: "Beachside Spot",
     description: "Feel the ocean breeze.",
-    price: 45.0,
+    price: 80,
   },
   {
     ownerId: 2,
@@ -129,7 +129,7 @@ const siteSpots = [
     lng: -104.9903,
     name: "Rocky Spot",
     description: "In the mountain range.",
-    price: 35.0,
+    price: 640.5,
   },
 ];
 

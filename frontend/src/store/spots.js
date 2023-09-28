@@ -4,6 +4,8 @@ const GETALL_SPOTS = "spots/getSpots";
 const CLEAR_STATE = "spots/clearState";
 const GET_SPOT = "spots/getSpot";
 const CREATE_SPOT = "spots/createSpot";
+const GET_SPOTS_USER = "spots/getSpotsUser";
+const UPDATE_SPOT = "spots/updateSpot";
 
 export const getSpots = (spots) => ({
   type: GETALL_SPOTS,
@@ -21,6 +23,16 @@ export const getSpot = (spot) => ({
 
 export const createSpot = (spot) => ({
   type: CREATE_SPOT,
+  spot,
+});
+
+export const getUserSpots = (spots) => ({
+  type: GET_SPOTS_USER,
+  spots,
+});
+
+export const updateSpot = (spot) => ({
+  type: UPDATE_SPOT,
   spot,
 });
 
@@ -62,6 +74,22 @@ export const createNewSpot =
     }
   };
 
+export const updateExistingSpot = (spotId, updatedData) => async (dispatch) => {
+  const res = await csrfFetch(`/api/spots/${spotId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updatedData),
+  });
+
+  if (res.ok) {
+    const updatedSpot = await res.json();
+    dispatch(updateSpot(updatedSpot));
+    return updatedSpot;
+  }
+};
+
 export const addImageToSpot = (spotId, url, preview) => async (dispatch) => {
   const res = await csrfFetch(`/api/spots/${spotId}/images`, {
     method: "POST",
@@ -78,7 +106,13 @@ export const addImageToSpot = (spotId, url, preview) => async (dispatch) => {
   }
 };
 
-const initialState = { allSpots: {}, currentSpot: null };
+export const fetchUserSpots = () => async (dispatch) => {
+  const res = await csrfFetch("/api/spots/current");
+  const spots = await res.json();
+  dispatch(getUserSpots(spots.Spots));
+};
+
+const initialState = { allSpots: {}, currentSpot: null, userSpots: [] };
 
 const spotsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -96,6 +130,20 @@ const spotsReducer = (state = initialState, action) => {
         currentSpot: action.spot,
       };
     case CREATE_SPOT:
+      return {
+        ...state,
+        allSpots: {
+          ...state.allSpots,
+          [action.spot.id]: action.spot,
+        },
+        currentSpot: action.spot,
+      };
+    case GET_SPOTS_USER:
+      return {
+        ...state,
+        userSpots: action.spots,
+      };
+    case UPDATE_SPOT:
       return {
         ...state,
         allSpots: {

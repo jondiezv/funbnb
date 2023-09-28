@@ -6,7 +6,7 @@ const {
   User,
   ReviewImage,
   Booking,
-} = require("../../db/models"); //Always remember to import the models you are going to need in your endpoints!
+} = require("../../db/models");
 const { check, query, validationResult } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 const {
@@ -319,7 +319,7 @@ const validateSpotUpdate = [
   check("description")
     .exists({ checkFalsy: true })
     .withMessage("Description is required"),
-  check("price").isInt({ min: 0 }).withMessage("Price per day is required"),
+  check("price").isFloat({ min: 0 }).withMessage("Price per day is required"),
   handleValidationErrors,
 ];
 

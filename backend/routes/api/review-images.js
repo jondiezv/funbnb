@@ -1,5 +1,5 @@
 const express = require("express");
-const { Review, ReviewImage } = require("../../db/models"); //Always remember to import the models you are going to need in your endpoints!
+const { Review, ReviewImage } = require("../../db/models");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 const {
