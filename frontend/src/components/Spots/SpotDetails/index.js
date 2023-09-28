@@ -9,12 +9,15 @@ import {
 import "./SpotDetails.css";
 import OpenModalButton from "../../OpenModalButton";
 import CreateReviewModal from "../../CreateReviewModal";
+import DeleteReviewModal from "../../DeleteReviewModal";
+import { useModal } from "../../../context/Modal";
 
 export const SpotDetails = () => {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const [showReviewButton, setShowReviewButton] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const { setModalContent } = useModal();
 
   useEffect(() => {}, [showReviewModal]);
 
@@ -30,8 +33,19 @@ export const SpotDetails = () => {
     setShowReviewModal(!showReviewModal);
   };
 
+  const openDeleteModal = (reviewId) => {
+    setModalContent(
+      <DeleteReviewModal
+        reviewId={reviewId}
+        onClose={() => setModalContent(null)}
+        refreshReviews={refreshReviews}
+      />
+    );
+  };
   const refreshReviews = () => {
-    dispatch(fetchReviewsForSpot(spotId));
+    dispatch(fetchReviewsForSpot(spotId)).then(() => {
+      dispatch(fetchSpot(spotId));
+    });
   };
 
   useEffect(() => {
@@ -129,6 +143,11 @@ export const SpotDetails = () => {
                 <div>{review.User.firstName}</div>
                 <div>{formatDate(review.createdAt)}</div>
                 <div>{review.review}</div>
+                {currentUser && review.userId === currentUser.id && (
+                  <button onClick={() => openDeleteModal(review.id)}>
+                    Delete
+                  </button>
+                )}
               </li>
             );
           })}
