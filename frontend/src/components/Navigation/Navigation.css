@@ -2,19 +2,31 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
-  overflow: hidden;
   background-color: #333;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 0;
   width: 100%;
   display: flex;
   align-items: center;
+  height: 100px;
+  justify-content: space-between;
+  min-height: 100px;
+  max-height: 100px;
 }
 
 .navbar-li {
   padding: 14px 16px;
+}
+
+.right-container {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-li--right {
+  margin-left: auto;
 }
 
 .navbar-li a {
@@ -32,29 +44,21 @@
   text-shadow: 6px 2px 3px #007bff;
 }
 
-.navbar-li > div {
+.create-spot {
+  margin-left: auto;
+  padding-right: 20px;
   color: white;
+  text-decoration: none;
 }
 
-.session-links {
+.home-logo {
+  width: 180px;
+  height: 40px;
+  margin-left: 20px;
+}
+
+.profile-button {
   display: flex;
-  gap: 16px;
-}
-
-.hidden {
-  display: none;
-}
-
-.session-links {
-  display: flex;
-  gap: 16px;
-}
-
-.profile-dropdown li {
-  color: white;
-  cursor: pointer;
-}
-
-.profile-dropdown li:hover {
-  background-color: rgba(0, 0, 0, 0.2);
+  align-items: center;
+  margin-right: 40px;
 }

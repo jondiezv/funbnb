@@ -2,7 +2,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   background-color: #f4f4f4;
 }
 
@@ -11,7 +10,6 @@ form {
   vertical-align: top;
   margin: 10px;
 }
-
 label {
   font-size: 1rem;
   margin-bottom: 0.5rem;
@@ -27,15 +25,6 @@ input {
   border-radius: 4px;
 }
 
-input:focus {
-  border-color: #007bff;
-}
-
-p {
-  color: red;
-  font-size: 0.875rem;
-}
-
 button {
   background-color: #007bff;
   color: white;
@@ -47,6 +36,8 @@ button {
   width: 100%;
 }
 
-button:hover {
-  background-color: #0056b3;
+.login {
+  font-size: 50px;
+  text-align: center;
+  padding-bottom: 40px;
 }

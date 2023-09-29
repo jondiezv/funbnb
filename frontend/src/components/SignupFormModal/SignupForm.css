@@ -27,15 +27,6 @@ input {
   border-radius: 4px;
 }
 
-input:focus {
-  border-color: #007bff;
-}
-
-p {
-  color: red;
-  font-size: 0.875rem;
-}
-
 button {
   background-color: #007bff;
   color: white;
@@ -47,6 +38,13 @@ button {
   width: 100%;
 }
 
-button:hover {
-  background-color: #0056b3;
+.signup {
+  font-size: 50px;
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+p {
+  color: rgb(255, 0, 0);
+  font-size: 0.875rem;
 }
