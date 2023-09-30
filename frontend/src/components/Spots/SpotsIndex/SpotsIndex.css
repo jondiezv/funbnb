@@ -1,14 +1,50 @@
+.spotsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-top: 180px;
+}
+
 .spotCard {
   border: 1px solid #ccc;
   border-radius: 8px;
-  margin: 16px;
-  padding: 16px;
-  display: inline-block;
-  width: 250px;
-  text-align: center;
+  margin: 1px;
+  padding: 5px;
+  text-align: left;
+  position: relative;
+  margin-top: 70px;
+}
+
+.spotLink {
+  text-decoration: none;
+  color: black;
 }
 
 .spotImage {
   max-width: 100%;
   border-radius: 8px;
+}
+
+.spotInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.spotLocation {
+  float: left;
+}
+
+.avgRating {
+  float: right;
+}
+
+.spotPrice {
+  clear: both;
+  font-weight: bold;
+}
+
+.starIcon {
+  font-size: 20px;
+  color: rgb(255, 208, 0);
 }
