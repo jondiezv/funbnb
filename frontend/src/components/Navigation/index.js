@@ -9,18 +9,23 @@ function Navigation({ isLoaded }) {
 
   return (
     <ul className="navbar-ul">
-      <li className="navbar-li">
+      <li>
         <NavLink exact to="/">
-          Home
+          <img
+            src="https://cdn.discordapp.com/attachments/1155927455580823562/1157052503423197334/Untitled-3.png"
+            alt="Home Logo"
+            className="home-logo"
+          />
         </NavLink>
       </li>
+
       {sessionUser && (
-        <li className="navbar-li">
-          <NavLink to="/new-spot">Create a New Spot</NavLink>
-        </li>
+        <NavLink className="create-spot" to="/new-spot">
+          Create a New Spot
+        </NavLink>
       )}
       {isLoaded && (
-        <li className="navbar-li">
+        <li className="profile-button">
           <ProfileButton user={sessionUser} />
         </li>
       )}

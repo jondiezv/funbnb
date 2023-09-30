@@ -9,12 +9,15 @@ import {
 import "./SpotDetails.css";
 import OpenModalButton from "../../OpenModalButton";
 import CreateReviewModal from "../../CreateReviewModal";
+import DeleteReviewModal from "../../DeleteReviewModal";
+import { useModal } from "../../../context/Modal";
 
 export const SpotDetails = () => {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const [showReviewButton, setShowReviewButton] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const { setModalContent } = useModal();
 
   useEffect(() => {}, [showReviewModal]);
 
@@ -30,8 +33,19 @@ export const SpotDetails = () => {
     setShowReviewModal(!showReviewModal);
   };
 
+  const openDeleteModal = (reviewId) => {
+    setModalContent(
+      <DeleteReviewModal
+        reviewId={reviewId}
+        onClose={() => setModalContent(null)}
+        refreshReviews={refreshReviews}
+      />
+    );
+  };
   const refreshReviews = () => {
-    dispatch(fetchReviewsForSpot(spotId));
+    dispatch(fetchReviewsForSpot(spotId)).then(() => {
+      dispatch(fetchSpot(spotId));
+    });
   };
 
   useEffect(() => {
@@ -72,43 +86,53 @@ export const SpotDetails = () => {
     <div className="SpotDetails-container">
       <h1>{spot.name}</h1>
       <div>
-        {spot.city}, {spot.state}, {spot.country}
+        {spot.city}, {spot.state}, {spot.country}{" "}
       </div>
-      <div>
+      <div className="imagesContainer">
         {spot.SpotImages && spot.SpotImages.length > 0 ? (
-          <div>
-            <img src={spot.SpotImages[0].url} alt={`${spot.name} main`} />
-            {spot.SpotImages.slice(1).map((image, index) => (
-              <img
-                key={index}
-                src={image.url}
-                alt={`${spot.name} ${index + 1}`}
-              />
-            ))}
-          </div>
+          <>
+            <div className="prevImage">
+              <img src={spot.SpotImages[0].url} alt={`${spot.name} main`} />
+            </div>
+            <div className="smallImages">
+              {spot.SpotImages.slice(1).map((image, index) => (
+                <img
+                  key={index}
+                  className="smallImage"
+                  src={image.url}
+                  alt={`${spot.name} ${index + 1}`}
+                />
+              ))}
+            </div>
+          </>
         ) : (
           <div>No images available</div>
         )}
       </div>
-      <div>
-        Hosted by{" "}
-        {spot.Owner
-          ? `${spot.Owner.firstName}, ${spot.Owner.lastName}`
-          : "Unknown"}
-      </div>
-      <div>{spot.description}</div>
-      <div>
-        <strong>${spot.price} night</strong>
-        <div className="reviewSummary">{reviewSummary}</div>
-        <button onClick={() => alert("Feature coming soon")}>Reserve</button>
+      <div className="bottomSection">
+        <div className="descriptionBox">
+          <div>
+            Hosted by{" "}
+            {spot.Owner
+              ? `${spot.Owner.firstName}, ${spot.Owner.lastName}`
+              : "Unknown"}
+          </div>
+          <div>{spot.description}</div>
+        </div>
+
+        <div className="ratingBox">
+          <div className="priceAndRating">
+            <strong>${spot.price} night</strong>
+            <div className="reviewSummary">{reviewSummary}</div>
+          </div>
+          <button onClick={() => alert("Feature coming soon")}>Reserve</button>
+        </div>
       </div>
       <h2>Reviews</h2>
       <div className="reviewSummary">{reviewSummary}</div>
-
       {showReviewButton && !isCurrentUserOwner && (
         <button onClick={toggleReviewModal}>Post Your Review</button>
       )}
-
       {showReviewModal && (
         <CreateReviewModal
           spotId={spotId}
@@ -117,7 +141,6 @@ export const SpotDetails = () => {
           setShowReviewModal={setShowReviewModal}
         />
       )}
-
       {reviews && reviews.length > 0 ? (
         <ul className="reviews-list">
           {reviews.map((review) => {
@@ -129,6 +152,11 @@ export const SpotDetails = () => {
                 <div>{review.User.firstName}</div>
                 <div>{formatDate(review.createdAt)}</div>
                 <div>{review.review}</div>
+                {currentUser && review.userId === currentUser.id && (
+                  <button onClick={() => openDeleteModal(review.id)}>
+                    Delete
+                  </button>
+                )}
               </li>
             );
           })}

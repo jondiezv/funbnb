@@ -1,0 +1,36 @@
+.hidden {
+  display: none;
+}
+
+.session-links {
+  display: flex;
+  gap: 16px;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 80px;
+  right: 20px;
+  padding: 5px 25px;
+  z-index: 1;
+  background-color: #333;
+  width: 160px;
+  border-radius: 8px;
+  border: 2px solid #007bff;
+}
+
+.profile-dropdown li {
+  color: white;
+  cursor: pointer;
+  list-style-type: none;
+  width: 100%;
+  margin: 5px 0;
+}
+
+.profile-dropdown li:hover {
+  cursor: pointer;
+}
+
+.divider {
+  border-top: 1px solid #007bff;
+}

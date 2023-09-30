@@ -15,25 +15,25 @@ const SpotsIndex = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className="spotsContainer">
       {spots.map((spot) => (
-        <Link to={`/spots/${spot.id}`} key={spot.id}>
-          <div className="spotCard">
+        <Link to={`/spots/${spot.id}`} key={spot.id} className="spotLink">
+          <div className="spotCard" title={spot.name}>
             <img
               src={spot.previewImage}
               alt="Spot thumbnail"
               className="spotImage"
             />
-            <div>
-              {spot.city}, {spot.state}
-            </div>
-            <div title={spot.name}>
-              {spot.name}
+            <div className="spotInfo">
+              <span className="spotLocation">
+                {spot.city}, {spot.state}
+              </span>
               <span className="avgRating">
-                ★ {spot.avgRating ? spot.avgRating.toFixed(1) : "New"}
+                <span className="starIcon">★</span>
+                {spot.avgRating ? spot.avgRating.toFixed(1) : "New"}
               </span>
             </div>
-            <div>{spot.price} night</div>
+            <div className="spotPrice">${spot.price} night</div>
           </div>
         </Link>
       ))}
