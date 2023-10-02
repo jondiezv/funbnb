@@ -22,14 +22,19 @@ function SignupFormModal() {
     username === "" ||
     password === "" ||
     username.length < 4 ||
-    password.length < 6 ||
-    password !== confirmPassword;
+    password.length < 6;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!isSignUpDisabled) {
       setErrors({});
-      return dispatch(
+      if (password !== confirmPassword) {
+        setErrors({
+          confirmPassword: "Please ensure password and confirm password match",
+        });
+        return;
+      }
+      dispatch(
         sessionActions.signup({
           email,
           username,
@@ -52,6 +57,7 @@ function SignupFormModal() {
     <>
       <div className="signup">Sign Up</div>
       <form onSubmit={handleSubmit}>
+        <div>First Name</div>
         <input
           type="text"
           placeholder="First Name"
@@ -60,6 +66,7 @@ function SignupFormModal() {
           required
         />
         {errors.firstName && <p>{errors.firstName}</p>}
+        <div>Last Name</div>
         <input
           type="text"
           placeholder="Last Name"
@@ -68,6 +75,7 @@ function SignupFormModal() {
           required
         />
         {errors.lastName && <p>{errors.lastName}</p>}
+        <div>Email</div>
         <input
           type="text"
           placeholder="Email"
@@ -76,6 +84,7 @@ function SignupFormModal() {
           required
         />
         {errors.email && <p>{errors.email}</p>}
+        <div>Username</div>
         <input
           type="text"
           placeholder="Username"
@@ -84,6 +93,7 @@ function SignupFormModal() {
           required
         />
         {errors.username && <p>{errors.username}</p>}
+        <div>Password</div>
         <input
           type="password"
           placeholder="Password"
@@ -92,6 +102,7 @@ function SignupFormModal() {
           required
         />
         {errors.password && <p>{errors.password}</p>}
+        <div>Confirm Password</div>
         <input
           type="password"
           placeholder="Confirm Password"
