@@ -16,7 +16,7 @@
   background-color: #333;
   width: 160px;
   border-radius: 8px;
-  border: 2px solid #007bff;
+  border: 2px solid #387ca4;
 }
 
 .profile-dropdown li {
@@ -32,5 +32,5 @@
 }
 
 .divider {
-  border-top: 1px solid #007bff;
+  border-top: 1px solid #387ca4;
 }

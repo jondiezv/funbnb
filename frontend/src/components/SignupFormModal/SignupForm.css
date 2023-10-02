@@ -10,6 +10,7 @@ form {
   display: inline-block;
   vertical-align: top;
   margin: 10px;
+  width: 300px;
 }
 
 label {
@@ -28,7 +29,7 @@ input {
 }
 
 button {
-  background-color: #007bff;
+  background-color: #387ca4;
   color: white;
   padding: 14px 20px;
   margin: 15px 0;

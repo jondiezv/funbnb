@@ -7,6 +7,7 @@
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 500px;
 }
 
 .SpotCreate-form {
@@ -34,7 +35,7 @@
 
 .SpotCreate-form input:focus,
 .SpotCreate-form textarea:focus {
-  border-color: #007bff;
+  border-color: #387ca4;
 }
 
 .SpotCreate-form p {
@@ -43,7 +44,7 @@
 }
 
 .SpotCreate-form button {
-  background-color: #007bff;
+  background-color: #387ca4;
   color: white;
   padding: 14px 20px;
   margin: 15px 0;
@@ -54,11 +55,33 @@
 }
 
 .SpotCreate-form button:hover {
-  background-color: #0056b3;
+  background-color: #fb535a;
 }
 
 .error-message {
   color: red;
   font-size: 12px;
   margin-left: 10px;
+}
+
+.cityState {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cityInput {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.latLng {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.latInput {
+  flex-grow: 1;
+  margin-right: 10px;
 }

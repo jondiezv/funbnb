@@ -93,7 +93,7 @@ const SpotEdit = () => {
 
   return (
     <div className="SpotEdit-container">
-      <h1>Edit Spot</h1>
+      <div className="UYS">Update your Spot</div>
       {errors.general && <p>{errors.general}</p>}
       <form className="SpotEdit-form" onSubmit={handleSubmit}>
         <h2>Where's your place located?</h2>
@@ -101,52 +101,78 @@ const SpotEdit = () => {
           Guests will only get your exact address once they booked a
           reservation.
         </h3>
-        <input
-          type="text"
-          placeholder="Country"
-          value={country}
-          onChange={(e) => setCountry(e.target.value)}
-        />
-        {errors.country && (
-          <span className="error-message">{errors.country}</span>
-        )}
-        <input
-          type="text"
-          placeholder="Street Address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        {errors.address && (
-          <span className="error-message">{errors.address}</span>
-        )}
-        <input
-          type="text"
-          placeholder="City"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-        />
-        {errors.city && <span className="error-message">{errors.city}</span>}
-        <input
-          type="text"
-          placeholder="State"
-          value={state}
-          onChange={(e) => setState(e.target.value)}
-        />
-        {errors.state && <span className="error-message">{errors.state}</span>}
-        <input
-          type="number"
-          placeholder="Latitude"
-          value={lat}
-          onChange={(e) => setLat(e.target.value)}
-        />
-        {errors.lat && <span className="error-message">{errors.lat}</span>}
-        <input
-          type="number"
-          placeholder="Longitude"
-          value={lng}
-          onChange={(e) => setLng(e.target.value)}
-        />
-        {errors.lng && <span className="error-message">{errors.lng}</span>}
+        <div>
+          <div>Country</div>
+          <input
+            type="text"
+            placeholder="Country"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+          />
+          {errors.country && (
+            <span className="error-message">{errors.country}</span>
+          )}
+        </div>
+        <div>
+          <div>Street Address</div>
+          <input
+            type="text"
+            placeholder="Street Address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          />
+          {errors.address && (
+            <span className="error-message">{errors.address}</span>
+          )}
+        </div>
+        <div className="cityState">
+          <div className="cityInput">
+            <div>City</div>
+            <input
+              type="text"
+              placeholder="City"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
+            {errors.city && (
+              <span className="error-message">{errors.city}</span>
+            )}
+          </div>
+          <div>
+            <div>State</div>
+            <input
+              type="text"
+              placeholder="State"
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+            />
+            {errors.state && (
+              <span className="error-message">{errors.state}</span>
+            )}
+          </div>
+        </div>
+        <div className="latLng">
+          <div className="latInput">
+            <div>Latitude</div>
+            <input
+              type="number"
+              placeholder="Latitude"
+              value={lat}
+              onChange={(e) => setLat(e.target.value)}
+            />
+            {errors.lat && <span className="error-message">{errors.lat}</span>}
+          </div>
+          <div>
+            <div>Longitude</div>
+            <input
+              type="number"
+              placeholder="Longitude"
+              value={lng}
+              onChange={(e) => setLng(e.target.value)}
+            />
+            {errors.lng && <span className="error-message">{errors.lng}</span>}
+          </div>
+        </div>
         <h2>Describe your place to guests</h2>
         <h3>
           Mention the best features of your space, any special amenities like

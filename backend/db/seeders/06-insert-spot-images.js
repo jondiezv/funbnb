@@ -65,12 +65,93 @@ const spotImages = [
     url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
   },
   {
+    spotId: 3,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 3,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 3,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 3,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 4,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 4,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 4,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 4,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
     spotId: 4,
     preview: true,
     url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
   },
   {
     spotId: 5,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 5,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 5,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 5,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 5,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+
+  {
+    spotId: 6,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 6,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 6,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 6,
     preview: true,
     url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
   },
@@ -85,12 +166,92 @@ const spotImages = [
     url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
   },
   {
+    spotId: 7,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 7,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 7,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 7,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 8,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 8,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 8,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 8,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
     spotId: 8,
     preview: true,
     url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
   },
   {
     spotId: 9,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 9,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 9,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 9,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 9,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 10,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 10,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 10,
+    preview: true,
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+  },
+  {
+    spotId: 10,
     preview: true,
     url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
   },

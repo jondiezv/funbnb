@@ -11,43 +11,43 @@ if (process.env.NODE_ENV === "production") {
 const reviewImages = [
   {
     reviewId: 1,
-    url: "https://example.com/image1.jpg",
+    url: "https://image.com/image.png",
   },
   {
     reviewId: 2,
-    url: "https://example.com/image2.jpg",
+    url: "https://image.com/image.png",
   },
   {
     reviewId: 3,
-    url: "https://example.com/image3.jpg",
+    url: "https://image.com/image.png",
   },
   {
     reviewId: 4,
-    url: "https://example.com/image4.jpg",
+    url: "https://image.com/image.png",
   },
   {
     reviewId: 5,
-    url: "https://example.com/image5.jpg",
+    url: "https://image.com/image.png",
   },
   {
     reviewId: 6,
-    url: "https://example.com/image6.jpg",
+    url: "https://image.com/image.png",
   },
   {
     reviewId: 7,
-    url: "https://example.com/image7.jpg",
+    url: "https://image.com/image.png",
   },
   {
     reviewId: 8,
-    url: "https://example.com/image8.jpg",
+    url: "https://image.com/image.png",
   },
   {
     reviewId: 9,
-    url: "https://example.com/image9.jpg",
+    url: "https://image.com/image.png",
   },
   {
     reviewId: 10,
-    url: "https://example.com/image10.jpg",
+    url: "https://image.com/image.png",
   },
 ];
 

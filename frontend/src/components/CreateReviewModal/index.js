@@ -63,13 +63,13 @@ const CreateReviewModal = ({ spotId, refreshReviews, setShowReviewModal }) => {
         {errors && <div className="errors">{errors}</div>}
         <form onSubmit={handleSubmit}>
           <textarea
+            className="reviewText2"
             placeholder="Leave your review here..."
             value={review}
             onChange={(e) => setReview(e.target.value)}
           ></textarea>
           <div>
-            <label>Stars:</label>
-            <StarRating stars={stars} setStars={setStars} />
+            <StarRating stars={stars} setStars={setStars} /> Stars
           </div>
           <button
             type="submit"

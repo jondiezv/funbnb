@@ -10,6 +10,7 @@ form {
   vertical-align: top;
   margin: 10px;
 }
+
 label {
   font-size: 1rem;
   margin-bottom: 0.5rem;
@@ -26,7 +27,7 @@ input {
 }
 
 button {
-  background-color: #007bff;
+  background-color: #387ca4;
   color: white;
   padding: 14px 20px;
   margin: 15px 0;
@@ -34,6 +35,16 @@ button {
   border-radius: 4px;
   cursor: pointer;
   width: 100%;
+  transition: background-color 0.3s;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button:not(:disabled):hover {
+  background-color: #fb535a;
 }
 
 .login {

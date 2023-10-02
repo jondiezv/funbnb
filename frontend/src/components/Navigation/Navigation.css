@@ -37,11 +37,11 @@
 }
 
 .navbar-li a:hover {
-  background-color: #007bff;
+  background-color: #fb535a;
 }
 
 .navbar-li a.active {
-  text-shadow: 6px 2px 3px #007bff;
+  text-shadow: 6px 2px 3px #387ca4;
 }
 
 .create-spot {
