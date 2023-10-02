@@ -34,7 +34,7 @@
 
 .SpotEdit-form input:focus,
 .SpotEdit-form textarea:focus {
-  border-color: #007bff;
+  border-color: #387ca4;
 }
 
 .SpotEdit-form p {
@@ -43,7 +43,7 @@
 }
 
 .SpotEdit-form button {
-  background-color: #007bff;
+  background-color: #387ca4;
   color: white;
   padding: 14px 20px;
   margin: 15px 0;
@@ -54,11 +54,16 @@
 }
 
 .SpotEdit-form button:hover {
-  background-color: #0056b3;
+  background-color: #fb535a;
 }
 
 .error-message {
   color: red;
   font-size: 12px;
   margin-left: 10px;
+}
+
+.UYS {
+  font-size: 40px;
+  margin-top: 100px;
 }

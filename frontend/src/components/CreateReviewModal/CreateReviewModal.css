@@ -1,3 +1,12 @@
+.CreateReviewModal {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
 .star-rating {
   display: inline-block;
 }
@@ -31,9 +40,9 @@
   align-items: center;
 }
 
-.CreateReviewModal {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  z-index: 1000;
+.reviewText2 {
+  width: 300px;
+  height: 150px;
+  resize: vertical;
+  margin-top: 10px;
 }

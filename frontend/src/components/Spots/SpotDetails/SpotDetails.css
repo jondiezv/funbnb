@@ -1,3 +1,7 @@
+.SpotDetails-container {
+  height: 900px;
+}
+
 .imagesContainer {
   display: flex;
   align-items: flex-start;
@@ -35,14 +39,80 @@
   padding: 10px;
   margin-top: 30px;
   margin-right: 5px;
+  width: 300px;
+  height: 100px;
 }
 
 .descriptionBox {
   padding: 16px;
+  border-bottom: 1px solid #ccc;
+  width: 600px;
+}
+
+.description {
+  margin-right: 50px;
+  word-wrap: break-word;
 }
 
 .priceAndRating {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 60px;
+}
+
+.hostedBy {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.review-item {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.reviewName {
+  font-size: 18px;
+}
+
+.reviewDate {
+  color: #525252;
+}
+
+.reviewText {
+  margin-top: 5px;
+}
+
+.reviewButton {
+  background-color: #387ca4;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+  width: 160px;
+  height: 40px;
+}
+
+.deleteButton {
+  background-color: #387ca4;
+  color: white;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  width: 80px;
+  height: 24px;
+  margin-top: 4px;
+}
+
+.spotName {
+  font-size: 35px;
+  padding-bottom: 20px;
+}
+
+.spotLoca {
+  padding-bottom: 10px;
 }

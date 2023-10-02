@@ -69,7 +69,7 @@ export const SpotDetails = () => {
   const reviewLabel = spot.numReviews === 1 ? "Review" : "Reviews";
   const reviewSummary =
     spot.numReviews > 0
-      ? `★ ${avgRating} · (${spot.numReviews} ${reviewLabel})`
+      ? `★ ${avgRating} · ${spot.numReviews} ${reviewLabel}`
       : `★ ${avgRating}`;
 
   const formatDate = (dateString) => {
@@ -84,8 +84,8 @@ export const SpotDetails = () => {
 
   return (
     <div className="SpotDetails-container">
-      <h1>{spot.name}</h1>
-      <div>
+      <div className="spotName">{spot.name}</div>
+      <div className="spotLoca">
         {spot.city}, {spot.state}, {spot.country}{" "}
       </div>
       <div className="imagesContainer">
@@ -111,13 +111,13 @@ export const SpotDetails = () => {
       </div>
       <div className="bottomSection">
         <div className="descriptionBox">
-          <div>
+          <div className="hostedBy">
             Hosted by{" "}
             {spot.Owner
-              ? `${spot.Owner.firstName}, ${spot.Owner.lastName}`
+              ? `${spot.Owner.firstName} ${spot.Owner.lastName}`
               : "Unknown"}
           </div>
-          <div>{spot.description}</div>
+          <div className="description">{spot.description}</div>
         </div>
 
         <div className="ratingBox">
@@ -128,10 +128,11 @@ export const SpotDetails = () => {
           <button onClick={() => alert("Feature coming soon")}>Reserve</button>
         </div>
       </div>
-      <h2>Reviews</h2>
       <div className="reviewSummary">{reviewSummary}</div>
       {showReviewButton && !isCurrentUserOwner && (
-        <button onClick={toggleReviewModal}>Post Your Review</button>
+        <button className="reviewButton" onClick={toggleReviewModal}>
+          Post Your Review
+        </button>
       )}
       {showReviewModal && (
         <CreateReviewModal
@@ -142,27 +143,30 @@ export const SpotDetails = () => {
         />
       )}
       {reviews && reviews.length > 0 ? (
-        <ul className="reviews-list">
+        <div className="reviews-container">
           {reviews.map((review) => {
             if (!review || !review.User) {
               return null;
             }
             return (
-              <li key={review.id}>
-                <div>{review.User.firstName}</div>
-                <div>{formatDate(review.createdAt)}</div>
-                <div>{review.review}</div>
+              <div key={review.id} className="review-item">
+                <div className="reviewName">{review.User.firstName}</div>
+                <div className="reviewDate">{formatDate(review.createdAt)}</div>
+                <div className="reviewText">{review.review}</div>
                 {currentUser && review.userId === currentUser.id && (
-                  <button onClick={() => openDeleteModal(review.id)}>
+                  <button
+                    className="deleteButton"
+                    onClick={() => openDeleteModal(review.id)}
+                  >
                     Delete
                   </button>
                 )}
-              </li>
+              </div>
             );
           })}
-        </ul>
+        </div>
       ) : currentUser && spot.Owner && currentUser.id !== spot.Owner.id ? (
-        <div>Be the first to post a review!</div>
+        <div className="no-reviews">Be the first to post a review!</div>
       ) : null}
     </div>
   );

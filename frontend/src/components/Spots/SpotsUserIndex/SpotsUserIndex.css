@@ -1,0 +1,35 @@
+.createSpotLink {
+  display: block;
+  margin-top: 10px;
+}
+
+.createSpotButton {
+  background-color: #387ca4;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  width: auto;
+  height: 30px;
+  margin: 0 auto;
+}
+
+.userSpotsContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  padding: 0px 4px;
+}
+
+.buttonContainer {
+  display: flex;
+  padding-top: 30px;
+  gap: 10px;
+}
+
+.spotsUserIndex {
+  margin-top: -360px;
+  margin-left: 30px;
+}
