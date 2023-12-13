@@ -138,27 +138,27 @@ const spotImages = [
   {
     spotId: 6,
     preview: true,
-    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1184560590027501568/Modernist-home-with-pool-roof-deck-santa-monica-los-angeles-rental.jpg",
   },
   {
     spotId: 6,
     preview: true,
-    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1184560590027501568/Modernist-home-with-pool-roof-deck-santa-monica-los-angeles-rental.jpg",
   },
   {
     spotId: 6,
     preview: true,
-    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1184560590027501568/Modernist-home-with-pool-roof-deck-santa-monica-los-angeles-rental.jpg",
   },
   {
     spotId: 6,
     preview: true,
-    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1184560590027501568/Modernist-home-with-pool-roof-deck-santa-monica-los-angeles-rental.jpg",
   },
   {
     spotId: 6,
     preview: true,
-    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1155927465978503298/buying-a-house-in-orlando.webp",
+    url: "https://cdn.discordapp.com/attachments/1155927455580823562/1184560590027501568/Modernist-home-with-pool-roof-deck-santa-monica-los-angeles-rental.jpg",
   },
   {
     spotId: 7,
