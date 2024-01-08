@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createNewBooking } from "../../store/bookings";
+import "./BookSpotModal.css";
 
 const CreateBookingModal = ({ spotId, onClose, refreshBookings }) => {
   const dispatch = useDispatch();
