@@ -11,12 +11,14 @@ import OpenModalButton from "../../OpenModalButton";
 import CreateReviewModal from "../../CreateReviewModal";
 import DeleteReviewModal from "../../DeleteReviewModal";
 import { useModal } from "../../../context/Modal";
+import CreateBookingModal from "../../BookSpotModal";
 
 export const SpotDetails = () => {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const [showReviewButton, setShowReviewButton] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const [showBookingModal, setShowBookingModal] = useState(false);
   const { setModalContent } = useModal();
 
   useEffect(() => {}, [showReviewModal]);
@@ -31,6 +33,10 @@ export const SpotDetails = () => {
 
   const toggleReviewModal = () => {
     setShowReviewModal(!showReviewModal);
+  };
+
+  const toggleBookingModal = () => {
+    setShowBookingModal(!showBookingModal);
   };
 
   const openDeleteModal = (reviewId) => {
@@ -125,7 +131,7 @@ export const SpotDetails = () => {
             <strong>${spot.price} night</strong>
             <div className="reviewSummary">{reviewSummary}</div>
           </div>
-          <button onClick={() => alert("Feature coming soon")}>Reserve</button>
+          <button onClick={toggleBookingModal}>Reserve</button>
         </div>
       </div>
       <div className="reviewSummary">{reviewSummary}</div>
@@ -141,6 +147,9 @@ export const SpotDetails = () => {
           refreshReviews={refreshReviews}
           setShowReviewModal={setShowReviewModal}
         />
+      )}
+      {showBookingModal && (
+        <CreateBookingModal spotId={spotId} onClose={toggleBookingModal} />
       )}
       {reviews && reviews.length > 0 ? (
         <div className="reviews-container">

@@ -1,0 +1,47 @@
+.CreateBookingModal {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 400px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.date-picker {
+  margin-bottom: 10px;
+}
+
+.date-picker label {
+  margin-right: 5px;
+}
+
+input[type="date"] {
+  width: 180px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button:disabled:hover {
+  background-color: grey;
+}
+
+.errors {
+  color: red;
+  margin-bottom: 10px;
+}
