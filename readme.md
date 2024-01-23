@@ -1,4 +1,5 @@
 # funbnb
+Live link: https://fun-bnb.onrender.com/
 
 ## Database Schema Design
 
